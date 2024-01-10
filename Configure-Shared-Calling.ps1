@@ -1,4 +1,4 @@
-<# 
+﻿<# 
 Configure Shared Calling
     Version: v1.0
     Date: 13/11/2023
@@ -22,7 +22,6 @@ $SharedCallingDomain = "None"
 $SharedCallingAAName = "None"
 $SharedCallingAAUPN = $SharedCallingAAName + "@" + $SharedCallingDomain
 $EmergencyPolicySelection = "None"
-$EmergencyLocation.LocationID = "None"
 ################### GLOBAL VARIABLES ###################
 
 ################### SHARED CALLING TASK FUNCTIONS ###################
@@ -36,7 +35,6 @@ function Connect-PowerShell
     Connect-ExchangeOnline
     Connect-MicrosoftTeams
     }
-
 
 ### FUNCTION - Creates Resource Account ###
 function New-SharedCallingResourceAccount 
@@ -137,40 +135,6 @@ function New-SharedCallingOperatorConnectConfig
 
 ################### SHARED CALLING TASK FUNCTIONS ###################
 
-################### INSTALL MODULE FUNCTIONS ###################
-Function Install-AzureADPreview
-    {
-    Install-Module AzureADPreview
-    Set-ExecutionPolicy -ExecutionPolicy ReoteSigned
-    Write-LogFileMessage "AzureADPreview Module Installed"
-    }
-Function Install-MicrosoftGraph 
-    {
-    Install-Module Microsoft.Graph
-    Set-ExecutionPolicy -ExecutionPolicy ReoteSigned
-    Write-LogFileMessage "MicrosoftGraph Module Installed"
-    }
-Function Install-MSOnline
-    {
-    Install-Module MSOnline
-    Set-ExecutionPolicy -ExecutionPolicy ReoteSigned
-    Write-LogFileMessage "MSOnline Module Installed"
-    }
-Function Install-ExchangeOnlineManagement
-    {
-    Install-Module ExchangeOnlineManagement
-    Set-ExecutionPolicy -ExecutionPolicy ReoteSigned
-    Write-LogFileMessage "ExchangeOnlineManagement Module Installed"
-    }
-Function Install-MicrosoftTeams
-    {
-    Install-Module MicrosoftTeams
-    Set-ExecutionPolicy -ExecutionPolicy ReoteSigned
-    Write-LogFileMessage "MicrosoftTeams Module Installed"
-    }
-
-################### INSTALL MODULE FUNCTIONS ###################
-
 ################### GENERIC SCRIPT FUNCTIONS ###################
 
 ### FUNCTION - Write To Log File ###
@@ -248,57 +212,57 @@ Write-Host "Checking for PowerShell Modules" -ForegroundColor Gray -BackgroundCo
 Write-LogFileMessage "Checking for PowerShell Modules"
 #AzureADPreview
 If (-not(Get-InstalledModule AzureADPreview -ErrorAction silentlycontinue)) {
-    Write-Host "AzureADPreview module does not exist"
-    Write-LogFileMessage "AzureADPreview module does not exist"
+    Write-Host "AzureADPreview module does not exist. Please run pre-requisite script."
+    Write-LogFileMessage "AzureADPreview module does not exist. Please run pre-requisite script."
     Install-AzureADPreview
   }
   Else {
-    Write-Host "AzureADPreview module exists"
-    Write-LogFileMessage "AzureADPreview module exists"
+    Write-Host "AzureADPreview module exists. Please run pre-requisite script."
+    Write-LogFileMessage "AzureADPreview module exists. Please run pre-requisite script."
   }
   
 #Microsoft.Graph
   If (-not(Get-InstalledModule Microsoft.Graph -ErrorAction silentlycontinue)) {
-    Write-Host "Microsoft.Graph module does not exist"
-    Write-LogFileMessage "Microsoft.Graph module does not exist"
+    Write-Host "Microsoft.Graph module does not exist. Please run pre-requisite script."
+    Write-LogFileMessage "Microsoft.Graph module does not exist. Please run pre-requisite script."
     Install-MicrosoftGraph
   }
   Else {
-    Write-Host "Microsoft.Graph module exists"
-    Write-LogFileMessage "Microsoft.Graph module exists"
+    Write-Host "Microsoft.Graph module exists. Please run pre-requisite script."
+    Write-LogFileMessage "Microsoft.Graph module exists. Please run pre-requisite script."
   }
   
 #MSOnline
   If (-not(Get-InstalledModule MSOnline -ErrorAction silentlycontinue)) {
-    Write-Host "MSOnline module does not exist"
-    Write-LogFileMessage "MSOnline module does not exist"
+    Write-Host "MSOnline module does not exist. Please run pre-requisite script."
+    Write-LogFileMessage "MSOnline module does not exist. Please run pre-requisite script."
     Install-MSOnline
   }
   Else {
-    Write-Host "MSOnline module exists"
-    Write-LogFileMessage "MSOnline module exists"
+    Write-Host "MSOnline module exists. Please run pre-requisite script."
+    Write-LogFileMessage "MSOnline module exists. Please run pre-requisite script."
   }
   
 #ExchangeOnlineManagement
   If (-not(Get-InstalledModule ExchangeOnlineManagement -ErrorAction silentlycontinue)) {
-    Write-Host "ExchangeOnlineManagement module does not exist"
-    Write-LogFileMessage "ExchangeOnlineManagement module does not exist"
+    Write-Host "ExchangeOnlineManagement module does not exist. Please run pre-requisite script."
+    Write-LogFileMessage "ExchangeOnlineManagement module does not exist. Please run pre-requisite script."
     Install-ExchangeOnlineManagement
   }
   Else {
-    Write-Host "ExchangeOnlineManagement module exists"
-    Write-LogFileMessage "ExchangeOnlineManagement module exists"
+    Write-Host "ExchangeOnlineManagement module exists. Please run pre-requisite script."
+    Write-LogFileMessage "ExchangeOnlineManagement module exists. Please run pre-requisite script."
   }
 
 #MicrosoftTeams
   If (-not(Get-InstalledModule MicrosoftTeams -ErrorAction silentlycontinue)) {
-    Write-Host "MicrosoftTeams module does not exist"
-    Write-LogFileMessage "MicrosoftTeams module does not exist"
+    Write-Host "MicrosoftTeams module does not exist. Please run pre-requisite script."
+    Write-LogFileMessage "MicrosoftTeams module does not exist. Please run pre-requisite script."
     Install-MicrosoftTeams
   }
   Else {
-    Write-Host "MicrosoftTeams module exists"
-    Write-LogFileMessage "MicrosoftTeams module exists"
+    Write-Host "MicrosoftTeams module exists. Please run pre-requisite script."
+    Write-LogFileMessage "MicrosoftTeams module exists. Please run pre-requisite script."
   } 
 
 #Shows Script Menu
