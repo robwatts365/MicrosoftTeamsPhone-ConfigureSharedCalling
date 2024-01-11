@@ -179,7 +179,7 @@ function Set-SharedCallingEmergencyAddress
             Write-LogFileMessage "Existing Emergency Location selected."
             Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
             Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.LocationID
-            return $global:EmergencyLocation
+            
         }elseif ($EmergencyLocationSelection -eq "No") {
             Write-Host "New Emergency Location selected."
             Write-LogFileMessage "New Emergency Location selected."
@@ -240,7 +240,7 @@ function Set-SharedCallingEmergencyAddress
             
             Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
             Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.LocationID
-            return $global:EmergencyLocation
+            
         }
         return $global:EmergencyLocation
     }
