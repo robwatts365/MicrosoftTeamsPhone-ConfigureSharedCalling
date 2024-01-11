@@ -90,16 +90,16 @@ function ShowDisclaimer
 function Connect-PowerShell
     {
     Connect-AzureAD
-    Write-Host "AzureAD Module Connected" -ForegroundColor Green
-    Write-LogFileMessage "AzureAD Module Connected"
+    Write-Host "AzureAD Module Connected." -ForegroundColor Green
+    Write-LogFileMessage "AzureAD Module Connected."
 
     Connect-MgGraph -Scopes "User.ReadWrite.All","Organization.Read.All"
-    Write-Host "Microsoft Graph Module Connected" -ForegroundColor Green
-    Write-LogFileMessage "Microsoft Graph Module Connected"
+    Write-Host "Microsoft Graph Module Connected." -ForegroundColor Green
+    Write-LogFileMessage "Microsoft Graph Module Connected."
 
     Connect-MSOLService
-    Write-Host "MSOnline Module Connected" -ForegroundColor Green
-    Write-LogFileMessage "MSOnline Module Connected"
+    Write-Host "MSOnline Module Connected." -ForegroundColor Green
+    Write-LogFileMessage "MSOnline Module Connected."
 
     Connect-ExchangeOnline
     Write-Host "Exchange Online Module Connected" -ForegroundColor Green
@@ -161,6 +161,8 @@ function New-SharedCallingResourceAccount
     Set-ScriptSleep 180 
     $TeamsResourceLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'PHONESYSTEM_VIRTUALUSER'
     Set-MgUserLicense -UserId "$SharedCallingAAUPN" -addLicenses @{SkuId = $TeamsResourceLicenseSku.SkuId} -RemoveLicenses @()
+    
+    return $SharedCallingDomain,$SharedCallingAAName,$SharedCallingAAUPN,$SharedCallingAANumber
     }
 
 ### FUNCTION - Configure Shared Calling Emergency Address ###
@@ -171,13 +173,13 @@ function Set-SharedCallingEmergencyAddress
         if ($EmergencyLocationSelection -eq "Yes") {
             <# Action to perform if the answer is Yes #>
             $EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
-            Write-Host "Existing Emergency Location selected"
-            Write-LogFileMessage "Existing Emergency Location selected"
-            Write-Host "Emergency Location: $EmergencyLocation.LocationID"
-            Write-LogFileMessage "Emergency Location: $EmergencyLocation.LocationID"
+            Write-Host "Existing Emergency Location selected."
+            Write-LogFileMessage "Existing Emergency Location selected."
+            Write-Host "Emergency Location:" $EmergencyLocation.LocationID
+            Write-LogFileMessage "Emergency Location:" $EmergencyLocation.LocationID
         }elseif ($EmergencyLocationSelection -eq "No") {
-            Write-Host "New Emergency Location selected"
-            Write-LogFileMessage "New Emergency Location selected"
+            Write-Host "New Emergency Location selected."
+            Write-LogFileMessage "New Emergency Location selected."
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
             $EmergencyLocationDescTitle = 'Emergency Location Description'
@@ -233,9 +235,10 @@ function Set-SharedCallingEmergencyAddress
             New-CsOnlineLisCivicAddress -HouseNumber $EmergencyLocationHouse -StreetName $EmergencyLocationStreet -City $EmergencyLocationCity -StateorProvince $EmergencyLocationState -CountryOrRegion $EmergencyLocationCountry -PostalCode $EmergencyLocationPostCode -Description $EmergencyLocationDesc -CompanyName $EmergencyLocationCompany -Latitude $EmergencyLocationLatitude -Longitude $EmergencyLocationLongitude
             $EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select the newly created Emergency Location"
             
-            Write-Host "Emergency Location: $EmergencyLocation.LocationID"
-            Write-LogFileMessage "Emergency Location: $EmergencyLocation.LocationID"
+            Write-Host "Emergency Location:" $EmergencyLocation.LocationID
+            Write-LogFileMessage "Emergency Location:" $EmergencyLocation.LocationID
         }
+        return $EmergencyLocation
     }
 ### FUNCTION - Create Auto Attendant ###
 function New-SharedCallingAutoAttendant
@@ -392,7 +395,7 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
         Write-Host "Shared Calling Resource account created: $SharedCallingAAName"
         Write-LogFileMessage "Shared Calling Resource Accounts tasks completed."
-        Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
+        Write-LogFileMessage "Shared Calling Resource account created: $SharedCallingAAName"
 
         Set-SharedCallingEmergencyAddress
 
@@ -435,7 +438,7 @@ function New-SharedCallingCallingPlansConfig
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
         Write-Host "Shared Calling Resource account created: $SharedCallingAAName"
         Write-LogFileMessage "Shared Calling Resource Accounts tasks completed."
-        Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
+        Write-LogFileMessage "Shared Calling Resource account created: $SharedCallingAAName"
 
         Set-SharedCallingEmergencyAddress
 
@@ -480,7 +483,7 @@ function New-SharedCallingOperatorConnectConfig
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
         Write-Host "Shared Calling Resource account created: $SharedCallingAAName"
         Write-LogFileMessage "Shared Calling Resource Accounts tasks completed."
-        Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
+        Write-LogFileMessage "Shared Calling Resource account created: $SharedCallingAAName"
 
         Set-SharedCallingEmergencyAddress
 
