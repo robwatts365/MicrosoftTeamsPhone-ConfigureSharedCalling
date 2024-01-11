@@ -423,7 +423,7 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
         
-        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.Identity -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType DirectRouting
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.LocationID -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType DirectRouting
         
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
@@ -470,7 +470,7 @@ function New-SharedCallingCallingPlansConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
 
-        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.Identity -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType CallingPlan
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.LocationID -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType CallingPlan
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
@@ -501,7 +501,7 @@ function New-SharedCallingOperatorConnectConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
 
-        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.Identity -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType OperatorConnect
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.LocationID -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType OperatorConnect
         
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
