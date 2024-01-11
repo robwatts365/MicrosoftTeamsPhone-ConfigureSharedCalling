@@ -272,8 +272,8 @@ function New-SharedCallingAutoAttendant
         Write-LogFileMessage "Auto Attendant: $global:SharedCallingAAName created"
     }
 
-### FUNCTION - Shared Calling Voice Configuration ###
-function Set-SharedCallingVoiceConfiguration
+### FUNCTION - Shared CallingEmergency Call Routing Policy ###
+function Set-SharedCallingEmergencyCallRoutingPolicy
     {
       $EmergencyCallRoutingPolicySelection = [System.Windows.Forms.MessageBox]::Show("Create a new Emergency Call Routing Policy?" , "Input Required" , 4, 64)
 
@@ -281,7 +281,7 @@ function Set-SharedCallingVoiceConfiguration
           Write-Host "Existing Emergency Call Routing Policy selected."
           Write-LogFileMessage "Existing Emergency Call Routing Policy selected."
 
-        }elseif ($EmergencyPolicySelection -eq "Yes") {
+        }elseif ($EmergencyCallRoutingPolicySelection -eq "Yes") {
             
             Write-Host "New Emergency Call Routing Policy selected."
             Write-LogFileMessage "New Emergency Call Routing Policy selected."
@@ -307,7 +307,10 @@ function Set-SharedCallingVoiceConfiguration
             Write-Host "New emergency Call Routing Policy: $EmergencyCallRoutingPolicy"
             Write-LogFileMessage "New emergency Call Routing Policy: $EmergencyCallRoutingPolicy"
         }
-
+      }
+### FUNCTION - Shared Calling Voice Routing Policy ###
+function Set-SharedCallingVoiceRoutingPolicy
+        {
         $VoiceRoutingPolicySharedCallingSelection = [System.Windows.Forms.MessageBox]::Show("Create a new Shared Calling Voice Routing Policy?" , "Shared Calling Voice Routing Policy creation" , 4, 64)
 
         if ($VoiceRoutingPolicySharedCallingSelection -eq "No") {
@@ -329,7 +332,11 @@ function Set-SharedCallingVoiceConfiguration
             Write-Host "New Shared Calling Voice Routing Policy: $SharedCallingVRPName"
             Write-LogFileMessage "New Shared Calling Voice Routing Policy: $SharedCallingVRPName"
         }
+      }
 
+### FUNCTION - Shared Calling Caller ID Policy ###
+function Set-SharedCallingCallerIDPolicy
+        {
         $CallerIDSelection = [System.Windows.Forms.MessageBox]::Show("Create a new Caller ID Policy?" , "Caller ID creation" , 4, 64)
 
         if ($CallerIDSelection -eq "No") {
@@ -352,7 +359,11 @@ function Set-SharedCallingVoiceConfiguration
             Write-Host "New Shared Calling Voice Routing Policy: $SharedCallerIDName"
             Write-LogFileMessage "New Shared Calling Voice Routing Policy: $SharedCallerIDName"
         }
+      }
 
+### FUNCTION - Shared Calling Policy ###
+function Set-SharedCallingPolicy
+        {
         $SharedCallingPolicySelection = [System.Windows.Forms.MessageBox]::Show("Do you require emergency callback numbers?" , "Shared Calling Policy Creation" , 4, 64)
 
         if ($SharedCallingPolicySelection -eq "Yes") {
@@ -428,10 +439,21 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
-        Set-SharedCallingVoiceConfiguration
-
-        Write-Host "Shared Calling Voice Configuration tasks completed." -ForegroundColor Green
-        Write-LogFileMessage "Shared Calling Voice Configuration tasks completed."
+        Set-SharedCallingEmergencyCallRoutingPolicy
+        Write-Host "Shared Emergency Call Routing Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Emergency Call Routing Policy Configuration tasks completed."
+        
+        Set-SharedCallingVoiceRoutingPolicy
+        Write-Host "Shared Calling Voice Routing Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Voice Routing Policy Configuration tasks completed."
+        
+        Set-SharedCallingCallerIDPolicy
+        Write-Host "Shared Calling Caller ID Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Caller ID Policy Configuration tasks completed."
+        
+        Set-SharedCallingPolicy
+        Write-Host "Shared Calling Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Policy Configuration tasks completed."
     }
 
 ### FUNCTION - Configure Shared Calling for Calling Plans numbers ###
@@ -474,10 +496,21 @@ function New-SharedCallingCallingPlansConfig
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
-        Set-SharedCallingVoiceConfiguration
-
-        Write-Host "Shared Calling Voice Configuration tasks completed." -ForegroundColor Green
-        Write-LogFileMessage "Shared Calling Voice Configuration tasks completed."
+        Set-SharedCallingEmergencyCallRoutingPolicy
+        Write-Host "Shared Emergency Call Routing Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Emergency Call Routing Policy Configuration tasks completed."
+        
+        Set-SharedCallingVoiceRoutingPolicy
+        Write-Host "Shared Calling Voice Routing Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Voice Routing Policy Configuration tasks completed."
+        
+        Set-SharedCallingCallerIDPolicy
+        Write-Host "Shared Calling Caller ID Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Caller ID Policy Configuration tasks completed."
+        
+        Set-SharedCallingPolicy
+        Write-Host "Shared Calling Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Policy Configuration tasks completed."
     }
 ### FUNCTION - Configure Shared Calling for Operator Connect numbers ###
 function New-SharedCallingOperatorConnectConfig
@@ -506,10 +539,21 @@ function New-SharedCallingOperatorConnectConfig
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
-        Set-SharedCallingVoiceConfiguration
-
-        Write-Host "Shared Calling Voice Configuration tasks completed." -ForegroundColor Green
-        Write-LogFileMessage "Shared Calling Voice Configuration tasks completed."
+        Set-SharedCallingEmergencyCallRoutingPolicy
+        Write-Host "Shared Emergency Call Routing Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Emergency Call Routing Policy Configuration tasks completed."
+        
+        Set-SharedCallingVoiceRoutingPolicy
+        Write-Host "Shared Calling Voice Routing Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Voice Routing Policy Configuration tasks completed."
+        
+        Set-SharedCallingCallerIDPolicy
+        Write-Host "Shared Calling Caller ID Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Caller ID Policy Configuration tasks completed."
+        
+        Set-SharedCallingPolicy
+        Write-Host "Shared Calling Policy Configuration tasks completed." -ForegroundColor Green
+        Write-LogFileMessage "Shared Calling Policy Configuration tasks completed."
 
     }
 
