@@ -18,11 +18,13 @@ DISCLAIMER
 #>
 
 ################### START OF GLOBAL VARIABLES ###################
-$SharedCallingDomain = "None"
-$SharedCallingAAName = "None"
-$SharedCallingAAUPN = $SharedCallingAAName + "@" + $SharedCallingDomain
-$SharedCallingAANumber = "None"
-$EmergencyLocation = "None"
+$global:SharedCallingDomain = "None"
+$global:SharedCallingAAName = "None"
+$global:SharedCallingAAName = "None"
+$global:SharedCallingDomain = "None"
+$global:SharedCallingAAUPN = $global:SharedCallingDomainSharedCallingAAName + "@" + $global:SharedCallingDomain
+$global:SharedCallingAANumber = "None"
+$global:EmergencyLocation = "None"
 ################### END OF GLOBAL VARIABLES ###################
 
 ################### START OF GENERIC SCRIPT FUNCTIONS ###################
@@ -117,52 +119,52 @@ function New-SharedCallingResourceAccount
     [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
     $SharedCallingDomainTitle = 'Domain Name'
     $SharedCallingDomainMsg   = 'Please provide the Domain Name to use (e.g. contoso.com):'
-    $SharedCallingDomain = [Microsoft.VisualBasic.Interaction]::InputBox( $SharedCallingDomainTitle, $SharedCallingDomainMsg )
+    $global:SharedCallingDomain = [Microsoft.VisualBasic.Interaction]::InputBox( $SharedCallingDomainTitle, $SharedCallingDomainMsg )
 
     # Write to Host and Log File
-    Write-Host "Domain Name: $SharedCallingDomain"
-    Write-LogFileMessage "Domain Name: $SharedCallingDomain"
+    Write-Host "Domain Name: $global:SharedCallingDomain"
+    Write-LogFileMessage "Domain Name: $global:SharedCallingDomain"
 
     # Set Resource Account Name
     [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
     $SharedCallingAANameTitle = 'Auto Attendant Name'
     $SharedCallingAANameMsg   = 'Please provide the Auto Attendant Name (e.g. AA-SharedCalling-UK):'
-    $SharedCallingAAName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANameTitle, $SharedCallingAANameMsg)
+    $global:SharedCallingAAName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANameTitle, $SharedCallingAANameMsg)
     
     # Write to Host and Log File 
-    Write-Host "Resource Account Name: $SharedCallingAAName"
-    Write-LogFileMessage "Resource Account Name: $SharedCallingAAName"
+    Write-Host "Resource Account Name: $global:SharedCallingAAName"
+    Write-LogFileMessage "Resource Account Name: $global:SharedCallingAAName"
 
     # Set Phone Number
     [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
     $SharedCallingAANumberTitle = 'Auto Attendant Number'
     $SharedCallingAANumberMsg   = 'Please provide the Auto Attendant Phone Number in E.164 format (e.g. +441632969000):'
-    $SharedCallingAANumber = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANumberTitle, $SharedCallingAANumberMsg)
+    $global:SharedCallingAANumber = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANumberTitle, $SharedCallingAANumberMsg)
     
     # Write to Host and Log File 
-    Write-Host "Resource Account Number: $SharedCallingAANumber"
-    Write-LogFileMessage "Resource Account Number: $SharedCallingAANumber"
+    Write-Host "Resource Account Number: $global:SharedCallingAANumber"
+    Write-LogFileMessage "Resource Account Number: $global:SharedCallingAANumber"
 
     # Set Resource Account UPN
-    $SharedCallingAAUPN = $SharedCallingAAName + "@" + $SharedCallingDomain
+    $global:SharedCallingAAUPN = $global:SharedCallingAAName + "@" + $global:SharedCallingDomain
     # Write to Host and Log File
-    Write-Host "Resource Account UPN: $SharedCallingAAUPN"
-    Write-LogFileMessage "Resource Account UPN: $SharedCallingAAUPN"
+    Write-Host "Resource Account UPN: $global:SharedCallingAAUPN"
+    Write-LogFileMessage "Resource Account UPN: $global:SharedCallingAAUPN"
 
 
     # Create Resource Account 
-    New-CsOnlineApplicationInstance -UserPrincipalName "$SharedCallingAAUPN" -ApplicationId ce933385-9390-45d1-9512-c8d228074e07 -DisplayName "$SharedCallingAAName"
+    New-CsOnlineApplicationInstance -UserPrincipalName "$global:SharedCallingAAUPN" -ApplicationId ce933385-9390-45d1-9512-c8d228074e07 -DisplayName "$global:SharedCallingAAName"
     
     # Assign Licensing Usage Location
     Set-ScriptSleep 180 
-    Set-MsolUser -UserPrincipalName "$SharedCallingAAUPN" -UsageLocation GB
+    Set-MsolUser -UserPrincipalName "$global:SharedCallingAAUPN" -UsageLocation GB
     
     # Assign Teams Phone Resource Account License
     Set-ScriptSleep 180 
     $TeamsResourceLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'PHONESYSTEM_VIRTUALUSER'
-    Set-MgUserLicense -UserId "$SharedCallingAAUPN" -addLicenses @{SkuId = $TeamsResourceLicenseSku.SkuId} -RemoveLicenses @()
+    Set-MgUserLicense -UserId "$global:SharedCallingAAUPN" -addLicenses @{SkuId = $TeamsResourceLicenseSku.SkuId} -RemoveLicenses @()
     
-    return $SharedCallingDomain,$SharedCallingAAName,$SharedCallingAAUPN,$SharedCallingAANumber
+    return $global:SharedCallingDomain,$global:SharedCallingAAName,$global:SharedCallingAAUPN,$global:SharedCallingAANumber
     }
 
 ### FUNCTION - Configure Shared Calling Emergency Address ###
@@ -172,11 +174,12 @@ function Set-SharedCallingEmergencyAddress
 
         if ($EmergencyLocationSelection -eq "Yes") {
             <# Action to perform if the answer is Yes #>
-            $EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
+            $global:EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
             Write-Host "Existing Emergency Location selected."
             Write-LogFileMessage "Existing Emergency Location selected."
-            Write-Host "Emergency Location:" $EmergencyLocation.LocationID
-            Write-LogFileMessage "Emergency Location:" $EmergencyLocation.LocationID
+            Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
+            Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.LocationID
+            return $global:EmergencyLocation
         }elseif ($EmergencyLocationSelection -eq "No") {
             Write-Host "New Emergency Location selected."
             Write-LogFileMessage "New Emergency Location selected."
@@ -233,12 +236,13 @@ function Set-SharedCallingEmergencyAddress
 
 
             New-CsOnlineLisCivicAddress -HouseNumber $EmergencyLocationHouse -StreetName $EmergencyLocationStreet -City $EmergencyLocationCity -StateorProvince $EmergencyLocationState -CountryOrRegion $EmergencyLocationCountry -PostalCode $EmergencyLocationPostCode -Description $EmergencyLocationDesc -CompanyName $EmergencyLocationCompany -Latitude $EmergencyLocationLatitude -Longitude $EmergencyLocationLongitude
-            $EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select the newly created Emergency Location"
+            $global:EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select the newly created Emergency Location"
             
-            Write-Host "Emergency Location:" $EmergencyLocation.LocationID
-            Write-LogFileMessage "Emergency Location:" $EmergencyLocation.LocationID
+            Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
+            Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.LocationID
+            return $global:EmergencyLocation
         }
-        return $EmergencyLocation
+        return $global:EmergencyLocation
     }
 ### FUNCTION - Create Auto Attendant ###
 function New-SharedCallingAutoAttendant
@@ -257,15 +261,15 @@ function New-SharedCallingAutoAttendant
         $menuPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAPrompt
         $defaultMenu = New-CsAutoAttendantMenu -Name "Default menu" -Prompts @($menuPrompt) -EnableDialByName -DirectorySearchMethod ByName
         $defaultCallFlow = New-CsAutoAttendantCallFlow -Name "Default call flow" -Menu $defaultMenu -Greetings @($greetingPrompt)
-        New-CsAutoAttendant -Name $SharedCallingAAName -DefaultCallFlow $defaultCallFlow -EnableVoiceResponse -LanguageId "en-GB" -TimeZoneId "GMT Standard Time" 
+        New-CsAutoAttendant -Name $global:SharedCallingAAName -DefaultCallFlow $defaultCallFlow -EnableVoiceResponse -LanguageId "en-GB" -TimeZoneId "GMT Standard Time" 
 
         ### Assign Resource Account
-        $applicationInstanceId = (Get-CsOnlineUser $SharedCallingAAUPN).Identity
-        $autoAttendantId = (Get-CsAutoAttendant -NameFilter $SharedCallingAAName).Id
+        $applicationInstanceId = (Get-CsOnlineUser $global:SharedCallingAAUPN).Identity
+        $autoAttendantId = (Get-CsAutoAttendant -NameFilter $global:SharedCallingAAName).Id
         New-CsOnlineApplicationInstanceAssociation -Identities @($applicationInstanceId) -ConfigurationId $autoAttendantId -ConfigurationType AutoAttendant
 
-        Write-Host "Auto Attendant: $SharedCallingAAName created"
-        Write-LogFileMessage "Auto Attendant: $SharedCallingAAName created"
+        Write-Host "Auto Attendant: $global:SharedCallingAAName created"
+        Write-LogFileMessage "Auto Attendant: $global:SharedCallingAAName created"
     }
 
 ### FUNCTION - Shared Calling Voice Configuration ###
@@ -342,7 +346,7 @@ function Set-SharedCallingVoiceConfiguration
             $SharedCallerIDNameMsg   = 'Please provide the Caller ID Policy Name (e.g. Shared Calling):'
             $SharedCallerIDName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallerIDNameTitle, $SharedCallerIDNameMsg)
                        
-            $ObjId = (Get-CsOnlineApplicationInstance -Identity $SharedCallingAAUPN).ObjectId
+            $ObjId = (Get-CsOnlineApplicationInstance -Identity $global:SharedCallingAAUPN).ObjectId
             New-CsCallingLineIdentity -Identity $SharedCallerIDName -CallingIDSubstitute Resource -EnableUserOverride $false -ResourceAccount $ObjId
 
             Write-Host "New Shared Calling Voice Routing Policy: $SharedCallerIDName"
@@ -355,6 +359,8 @@ function Set-SharedCallingVoiceConfiguration
           Write-Host "Emergency callback numbers required."
           Write-LogFileMessage "Emergency callback numbers required."
 
+          $SharedCallingRA = Get-CsOnlineUser -Identity $global:SharedCallingAAUPN
+
           [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
           $EmergencyNumber1Title = 'Emergency callback number 1'
           $EmergencyNumber1Msg   = 'Please provide the first Emergency callback number in E.164 format (e.g. +441632960999):'
@@ -365,21 +371,21 @@ function Set-SharedCallingVoiceConfiguration
           $EmergencyNumber2Msg   = 'Please provide the second Emergency callback number in E.164 format (e.g. +441632960999):'
           $EmergencyNumber2 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber2Title, $EmergencyNumber2Msg)
 
-          New-CsTeamsSharedCallingRoutingPolicy -Identity $SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity -EmergencyNumbers @{add=$EmergencyNumber1,$EmergencyNumber2}
+          New-CsTeamsSharedCallingRoutingPolicy -Identity $global:SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity -EmergencyNumbers @{add=$EmergencyNumber1,$EmergencyNumber2}
 
-          Write-Host "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
-          Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
+          Write-Host "New Shared Calling Voice Routing Policy created: $global:SharedCallingAAName"
+          Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $global:SharedCallingAAName"
 
         }elseif ($SharedCallingPolicySelection -eq "No") {
             
             Write-Host "Emergency callback numbers not required."
             Write-LogFileMessage "Emergency callback numbers not required."
 
-            $SharedCallingRA = Get-CsOnlineUser -Identity $SharedCallingAAUPN
-            New-CsTeamsSharedCallingRoutingPolicy -Identity $SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity
+            $SharedCallingRA = Get-CsOnlineUser -Identity $global:SharedCallingAAUPN
+            New-CsTeamsSharedCallingRoutingPolicy -Identity $global:SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity
             
-            Write-Host "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
-            Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $SharedCallingAAName"
+            Write-Host "New Shared Calling Voice Routing Policy created: $global:SharedCallingAAName"
+            Write-LogFileMessage "New Shared Calling Voice Routing Policy created: $global:SharedCallingAAName"
             
         }
 
@@ -393,9 +399,9 @@ function New-SharedCallingDirectRoutingConfig
         New-SharedCallingResourceAccount
         
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
-        Write-Host "Shared Calling Resource account created: $SharedCallingAAName"
+        Write-Host "Shared Calling Resource account created: $global:SharedCallingAAName"
         Write-LogFileMessage "Shared Calling Resource Accounts tasks completed."
-        Write-LogFileMessage "Shared Calling Resource account created: $SharedCallingAAName"
+        Write-LogFileMessage "Shared Calling Resource account created: $global:SharedCallingAAName"
 
         Set-SharedCallingEmergencyAddress
 
@@ -407,7 +413,7 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host $RAVoiceRoutingPolicy.Identity "is your chosen Voice Routing Policy"
         Write-LogFileMessage $RAVoiceRoutingPolicy.Identity "is your chosen Voice Routing Policy"
 
-        Grant-CsOnlineVoiceRoutingPolicy -PolicyName $RAVoiceRoutingPolicy -Identity $SharedCallingAAUPN
+        Grant-CsOnlineVoiceRoutingPolicy -PolicyName $RAVoiceRoutingPolicy -Identity $global:SharedCallingAAUPN
 
         Write-Host "Shared Calling Voice Routing Policy tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Voice Routing Policy tasks completed."
@@ -417,10 +423,10 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
         
-        Set-CsPhoneNumberAssignment -Identity $SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $SharedCallingAANumber -PhoneNumberType DirectRouting
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType DirectRouting
         
-        Write-Host "Shared Resource Account Phone Number ($SharedCallingAANumber) assigned to $SharedCallingAAUPN." -ForegroundColor Green
-        Write-LogFileMessage "Shared Resource Account Phone Number ($SharedCallingAANumber) assigned to $SharedCallingAAUPN."
+        Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
+        Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
         Set-SharedCallingVoiceConfiguration
 
@@ -436,9 +442,9 @@ function New-SharedCallingCallingPlansConfig
         New-SharedCallingResourceAccount
         
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
-        Write-Host "Shared Calling Resource account created: $SharedCallingAAName"
+        Write-Host "Shared Calling Resource account created: $global:SharedCallingAAName"
         Write-LogFileMessage "Shared Calling Resource Accounts tasks completed."
-        Write-LogFileMessage "Shared Calling Resource account created: $SharedCallingAAName"
+        Write-LogFileMessage "Shared Calling Resource account created: $global:SharedCallingAAName"
 
         Set-SharedCallingEmergencyAddress
 
@@ -447,14 +453,14 @@ function New-SharedCallingCallingPlansConfig
 
       ### Assign Pay-as-you go calling plan (Zone-1 countries i.e. UK)
         $PAYGCallingZone1LicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'Microsoft_Teams_Calling_Plan_pay_as_you_go_(country_zone_1)'
-        Set-MgUserLicense -UserId $SharedCallingAAUPN -addLicenses @{SkuId = $PAYGCallingZone1LicenseSku.SkuId} -RemoveLicenses @()
+        Set-MgUserLicense -UserId $global:SharedCallingAAUPN -addLicenses @{SkuId = $PAYGCallingZone1LicenseSku.SkuId} -RemoveLicenses @()
         
       ### PAUSE - wait a few minutes for the above cmdlet configuration to be completed
         Set-ScriptSleep 180
       
       ### Assign communication credits       
         $CommunicationCreditsLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'MCOPSTNC'
-        Set-MgUserLicense -UserId $SharedCallingAAUPN -addLicenses @{SkuId = $CommunicationCreditsLicenseSku.SkuId} -RemoveLicenses @()
+        Set-MgUserLicense -UserId $global:SharedCallingAAUPN -addLicenses @{SkuId = $CommunicationCreditsLicenseSku.SkuId} -RemoveLicenses @()
 
         Write-Host "Calling Plans licensing tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Calling Plans licensing tasks completed."
@@ -464,9 +470,9 @@ function New-SharedCallingCallingPlansConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
 
-        Set-CsPhoneNumberAssignment -Identity $SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $SharedCallingAANumber -PhoneNumberType CallingPlan
-        Write-Host "Shared Resource Account Phone Number ($SharedCallingAANumber) assigned to $SharedCallingAAUPN." -ForegroundColor Green
-        Write-LogFileMessage "Shared Resource Account Phone Number ($SharedCallingAANumber) assigned to $SharedCallingAAUPN."
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType CallingPlan
+        Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
+        Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
         Set-SharedCallingVoiceConfiguration
 
@@ -481,9 +487,9 @@ function New-SharedCallingOperatorConnectConfig
         New-SharedCallingResourceAccount
         
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
-        Write-Host "Shared Calling Resource account created: $SharedCallingAAName"
+        Write-Host "Shared Calling Resource account created: $global:SharedCallingAAName"
         Write-LogFileMessage "Shared Calling Resource Accounts tasks completed."
-        Write-LogFileMessage "Shared Calling Resource account created: $SharedCallingAAName"
+        Write-LogFileMessage "Shared Calling Resource account created: $global:SharedCallingAAName"
 
         Set-SharedCallingEmergencyAddress
 
@@ -495,10 +501,10 @@ function New-SharedCallingOperatorConnectConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
 
-        Set-CsPhoneNumberAssignment -Identity $SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $SharedCallingAANumber -PhoneNumberType OperatorConnect
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType OperatorConnect
         
-        Write-Host "Shared Resource Account Phone Number ($SharedCallingAANumber) assigned to $SharedCallingAAUPN." -ForegroundColor Green
-        Write-LogFileMessage "Shared Resource Account Phone Number ($SharedCallingAANumber) assigned to $SharedCallingAAUPN."
+        Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
+        Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
         Set-SharedCallingVoiceConfiguration
 
