@@ -90,10 +90,24 @@ function ShowDisclaimer
 function Connect-PowerShell
     {
     Connect-AzureAD
+    Write-Host "AzureAD Module Connected" -ForegroundColor Green
+    Write-LogFileMessage "AzureAD Module Connected"
+
     Connect-MgGraph -Scopes "User.ReadWrite.All","Organization.Read.All"
+    Write-Host "Microsoft Graph Module Connected" -ForegroundColor Green
+    Write-LogFileMessage "Microsoft Graph Module Connected"
+
     Connect-MSOLService
+    Write-Host "MSOnline Module Connected" -ForegroundColor Green
+    Write-LogFileMessage "MSOnline Module Connected"
+
     Connect-ExchangeOnline
+    Write-Host "Exchange Online Module Connected" -ForegroundColor Green
+    Write-LogFileMessage "Exchange Online Module Connected"
+
     Connect-MicrosoftTeams
+    Write-Host "Microsoft Teams Module Connected" -ForegroundColor Green
+    Write-LogFileMessage "Microsoft Teams Module Connected"
     }
 
 ### FUNCTION - Creates Resource Account ###
@@ -371,6 +385,8 @@ function Set-SharedCallingVoiceConfiguration
 ### FUNCTION - Configure Shared Calling for Direct Routing numbers ###
 function New-SharedCallingDirectRoutingConfig
     {
+        Connect-PowerShell  
+
         New-SharedCallingResourceAccount
         
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
@@ -412,6 +428,8 @@ function New-SharedCallingDirectRoutingConfig
 ### FUNCTION - Configure Shared Calling for Calling Plans numbers ###
 function New-SharedCallingCallingPlansConfig
     {
+        Connect-PowerShell  
+
         New-SharedCallingResourceAccount
         
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
@@ -455,6 +473,8 @@ function New-SharedCallingCallingPlansConfig
 ### FUNCTION - Configure Shared Calling for Operator Connect numbers ###
 function New-SharedCallingOperatorConnectConfig
     {
+        Connect-PowerShell
+        
         New-SharedCallingResourceAccount
         
         Write-Host "Shared Calling Resource Accounts tasks completed." -ForegroundColor Green
@@ -507,57 +527,57 @@ Write-Host "Checking for PowerShell Modules" -ForegroundColor Gray -BackgroundCo
 Write-LogFileMessage "Checking for PowerShell Modules"
 #AzureADPreview
 If (-not(Get-InstalledModule AzureADPreview -ErrorAction silentlycontinue)) {
-    Write-Host "AzureADPreview module does not exist. Please run pre-requisite script."
+    Write-Host "AzureADPreview module does not exist. Please run pre-requisite script." -ForegroundColor DarkRed
     Write-LogFileMessage "AzureADPreview module does not exist. Please run pre-requisite script."
     Install-AzureADPreview
   }
   Else {
-    Write-Host "AzureADPreview module exists. Please run pre-requisite script."
-    Write-LogFileMessage "AzureADPreview module exists. Please run pre-requisite script."
+    Write-Host "AzureADPreview module exists." -ForegroundColor Green
+    Write-LogFileMessage "AzureADPreview module exists."
   }
   
 #Microsoft.Graph
   If (-not(Get-InstalledModule Microsoft.Graph -ErrorAction silentlycontinue)) {
-    Write-Host "Microsoft.Graph module does not exist. Please run pre-requisite script."
+    Write-Host "Microsoft.Graph module does not exist. Please run pre-requisite script." -ForegroundColor DarkRed
     Write-LogFileMessage "Microsoft.Graph module does not exist. Please run pre-requisite script."
     Install-MicrosoftGraph
   }
   Else {
-    Write-Host "Microsoft.Graph module exists. Please run pre-requisite script."
-    Write-LogFileMessage "Microsoft.Graph module exists. Please run pre-requisite script."
+    Write-Host "Microsoft.Graph module exists." -ForegroundColor Green
+    Write-LogFileMessage "Microsoft.Graph module exists."
   }
   
 #MSOnline
   If (-not(Get-InstalledModule MSOnline -ErrorAction silentlycontinue)) {
-    Write-Host "MSOnline module does not exist. Please run pre-requisite script."
+    Write-Host "MSOnline module does not exist. Please run pre-requisite script." -ForegroundColor DarkRed
     Write-LogFileMessage "MSOnline module does not exist. Please run pre-requisite script."
     Install-MSOnline
   }
   Else {
-    Write-Host "MSOnline module exists. Please run pre-requisite script."
-    Write-LogFileMessage "MSOnline module exists. Please run pre-requisite script."
+    Write-Host "MSOnline module exists." -ForegroundColor Green
+    Write-LogFileMessage "MSOnline module exists."
   }
   
 #ExchangeOnlineManagement
   If (-not(Get-InstalledModule ExchangeOnlineManagement -ErrorAction silentlycontinue)) {
-    Write-Host "ExchangeOnlineManagement module does not exist. Please run pre-requisite script."
+    Write-Host "ExchangeOnlineManagement module does not exist. Please run pre-requisite script." -ForegroundColor DarkRed
     Write-LogFileMessage "ExchangeOnlineManagement module does not exist. Please run pre-requisite script."
     Install-ExchangeOnlineManagement
   }
   Else {
-    Write-Host "ExchangeOnlineManagement module exists. Please run pre-requisite script."
-    Write-LogFileMessage "ExchangeOnlineManagement module exists. Please run pre-requisite script."
+    Write-Host "ExchangeOnlineManagement module exists." -ForegroundColor Green
+    Write-LogFileMessage "ExchangeOnlineManagement module exists."
   }
 
 #MicrosoftTeams
   If (-not(Get-InstalledModule MicrosoftTeams -ErrorAction silentlycontinue)) {
-    Write-Host "MicrosoftTeams module does not exist. Please run pre-requisite script."
+    Write-Host "MicrosoftTeams module does not exist. Please run pre-requisite script." -ForegroundColor DarkRed
     Write-LogFileMessage "MicrosoftTeams module does not exist. Please run pre-requisite script."
     Install-MicrosoftTeams
   }
   Else {
-    Write-Host "MicrosoftTeams module exists. Please run pre-requisite script."
-    Write-LogFileMessage "MicrosoftTeams module exists. Please run pre-requisite script."
+    Write-Host "MicrosoftTeams module exists." -ForegroundColor Green
+    Write-LogFileMessage "MicrosoftTeams module exists."
   } 
 
 #Shows Script Menu
