@@ -117,9 +117,9 @@ function New-SharedCallingResourceAccount
     {
     # Set Domain Name
     [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-    $SharedCallingDomainTitle = 'Domain Name'
-    $SharedCallingDomainMsg   = 'Please provide the Domain Name to use (e.g. contoso.com):'
-    $global:SharedCallingDomain = [Microsoft.VisualBasic.Interaction]::InputBox( $SharedCallingDomainTitle, $SharedCallingDomainMsg )
+    $SharedCallingDomainMsg = 'Domain Name'
+    $SharedCallingDomainTitle   = 'Please provide the Domain Name to use (e.g. contoso.com):'
+    $global:SharedCallingDomain = [Microsoft.VisualBasic.Interaction]::InputBox( $SharedCallingDomainMsg, $SharedCallingDomainTitle )
 
     # Write to Host and Log File
     Write-Host "Domain Name: $global:SharedCallingDomain"
@@ -127,9 +127,9 @@ function New-SharedCallingResourceAccount
 
     # Set Resource Account Name
     [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-    $SharedCallingAANameTitle = 'Auto Attendant Name'
-    $SharedCallingAANameMsg   = 'Please provide the Auto Attendant Name (e.g. AA-SharedCalling-UK):'
-    $global:SharedCallingAAName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANameTitle, $SharedCallingAANameMsg)
+    $SharedCallingAANameMsg = 'Auto Attendant Name'
+    $SharedCallingAANameTitle   = 'Please provide the Auto Attendant Name (e.g. AA-SharedCalling-UK):'
+    $global:SharedCallingAAName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANameMsg, $SharedCallingAANameTitle)
     
     # Write to Host and Log File 
     Write-Host "Resource Account Name: $global:SharedCallingAAName"
@@ -137,9 +137,9 @@ function New-SharedCallingResourceAccount
 
     # Set Phone Number
     [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-    $SharedCallingAANumberTitle = 'Auto Attendant Number'
-    $SharedCallingAANumberMsg   = 'Please provide the Auto Attendant Phone Number in E.164 format (e.g. +441632969000):'
-    $global:SharedCallingAANumber = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANumberTitle, $SharedCallingAANumberMsg)
+    $SharedCallingAANumberMsg = 'Auto Attendant Number'
+    $SharedCallingAANumberTitle   = 'Please provide the Auto Attendant Phone Number in E.164 format (e.g. +441632969000):'
+    $global:SharedCallingAANumber = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANumberMsg, $SharedCallingAANumberTitle)
     
     # Write to Host and Log File 
     Write-Host "Resource Account Number: $global:SharedCallingAANumber"
@@ -185,54 +185,54 @@ function Set-SharedCallingEmergencyAddress
             Write-LogFileMessage "New Emergency Location selected."
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationDescTitle = 'Emergency Location Description'
-            $EmergencyLocationDescMsg   = 'Please provide the Emergency Location Description (e.g. Microsoft-Campus-B2-TVP):'
-            $EmergencyLocationDesc = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationDescTitle, $EmergencyLocationDescMsg)
+            $EmergencyLocationDescMsg = 'Emergency Location Description'
+            $EmergencyLocationDescTitle   = 'Please provide the Emergency Location Description (e.g. Microsoft-Campus-B2-TVP):'
+            $EmergencyLocationDesc = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationDescMsg, $EmergencyLocationDescTitle)
     
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationCompanyTitle = 'Emergency Location Company'
-            $EmergencyLocationCompanyMsg   = 'Please provide the Emergency Location Company (e.g. Microsoft):'
-            $EmergencyLocationCompany = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationCompanyTitle, $EmergencyLocationCompanyMsg)
+            $EmergencyLocationCompanyMsg = 'Emergency Location Company'
+            $EmergencyLocationCompanyTitle   = 'Please provide the Emergency Location Company (e.g. Microsoft):'
+            $EmergencyLocationCompany = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationCompanyMsg, $EmergencyLocationCompanyTitle)
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationHouseTitle = 'Emergency Location House/Building'
-            $EmergencyLocationHouseMsg   = 'Please provide the Emergency Location House/Building Name (e.g. Microsoft Campus Building 2):'
-            $EmergencyLocationHouse = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationHouseTitle, $EmergencyLocationHouseMsg)
+            $EmergencyLocationHouseMsg = 'Emergency Location House/Building'
+            $EmergencyLocationHouseTitle   = 'Please provide the Emergency Location House/Building Name (e.g. Microsoft Campus Building 2):'
+            $EmergencyLocationHouse = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationHouseMsg, $EmergencyLocationHouseTitle)
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationStreetTitle = 'Emergency Location Street'
-            $EmergencyLocationStreetMsg   = 'Please provide the Emergency Location Street (e.g. Thames Valley Park):'
-            $EmergencyLocationStreet = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationStreetTitle, $EmergencyLocationStreetMsg)
+            $EmergencyLocationStreetMsg = 'Emergency Location Street'
+            $EmergencyLocationStreetTitle   = 'Please provide the Emergency Location Street (e.g. Thames Valley Park):'
+            $EmergencyLocationStreet = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationStreetMsg, $EmergencyLocationStreetTitle)
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationCityTitle = 'Emergency Location City'
-            $EmergencyLocationCityMsg   = 'Please provide the Emergency Location City (e.g. Reading):'
-            $EmergencyLocationCity = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationCityTitle, $EmergencyLocationCityMsg)
+            $EmergencyLocationCityMsg = 'Emergency Location City'
+            $EmergencyLocationCityTitle   = 'Please provide the Emergency Location City (e.g. Reading):'
+            $EmergencyLocationCity = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationCityMsg, $EmergencyLocationCityTitle)
         
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationStateTitle = 'Emergency Location State/Province'
-            $EmergencyLocationStateMsg   = 'Please provide the Emergency Location State/Province (e.g. Berkshire):'
-            $EmergencyLocationState = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationStateTitle, $EmergencyLocationStateMsg)
+            $EmergencyLocationStateMsg = 'Emergency Location State/Province'
+            $EmergencyLocationStateTitle   = 'Please provide the Emergency Location State/Province (e.g. Berkshire):'
+            $EmergencyLocationState = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationStateMsg, $EmergencyLocationStateTitle)
             
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationCountryTitle = 'Emergency Location Country/Region'
-            $EmergencyLocationCountryMsg   = 'Please provide the Emergency Location Country/Region (e.g. GB):'
-            $EmergencyLocationCountry = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationCountryTitle, $EmergencyLocationCountryMsg)
+            $EmergencyLocationCountryMsg = 'Emergency Location Country/Region'
+            $EmergencyLocationCountryTitle   = 'Please provide the Emergency Location Country/Region (e.g. GB):'
+            $EmergencyLocationCountry = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationCountryMsg, $EmergencyLocationCountryTitle)
     
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationPostCodeTitle = 'Emergency Location Postal Code'
-            $EmergencyLocationPostCodeMsg   = 'Please provide the Emergency Location PostCode (e.g. RG6 1WG):'
-            $EmergencyLocationPostCode = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationPostCodeTitle, $EmergencyLocationPostCodeMsg)
+            $EmergencyLocationPostCodeMsg = 'Emergency Location Postal Code'
+            $EmergencyLocationPostCodeTitle   = 'Please provide the Emergency Location PostCode (e.g. RG6 1WG):'
+            $EmergencyLocationPostCode = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationPostCodeMsg, $EmergencyLocationPostCodeTitle)
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationLatitudeTitle = 'Emergency Location Latitude'
-            $EmergencyLocationLatitudeMsg   = 'Please provide the Emergency Location Latitude (e.g. 51.060692):'
-            $EmergencyLocationLatitude = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationLatitudeTitle, $EmergencyLocationLatitudeMsg)
+            $EmergencyLocationLatitudeMsg = 'Emergency Location Latitude'
+            $EmergencyLocationLatitudeTitle   = 'Please provide the Emergency Location Latitude (e.g. 51.060692):'
+            $EmergencyLocationLatitude = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationLatitudeMsg, $EmergencyLocationLatitudeTitle)
     
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $EmergencyLocationLongitudeTitle = 'Emergency Location Longitude'
-            $EmergencyLocationLongitudeMsg   = 'Please provide the Emergency Location Longitude (e.g. -1.313154):'
-            $EmergencyLocationLongitude = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationLongitudeTitle, $EmergencyLocationLongitudeMsg)
+            $EmergencyLocationLongitudeMsg = 'Emergency Location Longitude'
+            $EmergencyLocationLongitudeTitle   = 'Please provide the Emergency Location Longitude (e.g. -1.313154):'
+            $EmergencyLocationLongitude = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyLocationLongitudeMsg, $EmergencyLocationLongitudeTitle)
 
 
             New-CsOnlineLisCivicAddress -HouseNumber $EmergencyLocationHouse -StreetName $EmergencyLocationStreet -City $EmergencyLocationCity -StateorProvince $EmergencyLocationState -CountryOrRegion $EmergencyLocationCountry -PostalCode $EmergencyLocationPostCode -Description $EmergencyLocationDesc -CompanyName $EmergencyLocationCompany -Latitude $EmergencyLocationLatitude -Longitude $EmergencyLocationLongitude
@@ -248,14 +248,14 @@ function Set-SharedCallingEmergencyAddress
 function New-SharedCallingAutoAttendant
     {
         [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-        $SharedCallingAAGreetingTitle = 'Auto Attendant Greeting'
-        $SharedCallingAAGreetingMsg   = 'Please provide the Auto Attendant Greeting (e.g. Welcome to Contoso!):'
-        $SharedCallingAAGreeting = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAAGreetingTitle, $SharedCallingAAGreetingMsg)
+        $SharedCallingAAGreetingMsg = 'Auto Attendant Greeting'
+        $SharedCallingAAGreetingTitle   = 'Please provide the Auto Attendant Greeting (e.g. Welcome to Contoso!):'
+        $SharedCallingAAGreeting = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAAGreetingMsg, $SharedCallingAAGreetingTitle)
 
         [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-        $SharedCallingAAPromptTitle = 'Auto Attendant Prompt'
-        $SharedCallingAAPromptMsg   = 'Please provide the Auto Attendant Prompt (e.g. If you know the extension you require, dial it now):'
-        $SharedCallingAAPrompt = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAAPromptTitle, $SharedCallingAAPromptMsg)
+        $SharedCallingAAPromptMsg = 'Auto Attendant Prompt'
+        $SharedCallingAAPromptTitle   = 'Please provide the Auto Attendant Prompt (e.g. If you know the extension you require, dial it now):'
+        $SharedCallingAAPrompt = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAAPromptMsg, $SharedCallingAAPromptTitle)
 
         $greetingPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAGreeting
         $menuPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAPrompt
@@ -287,19 +287,19 @@ function Set-SharedCallingVoiceConfiguration
             Write-LogFileMessage "New Emergency Call Routing Policy selected."
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $SharedCallingEmergencyRoutingPolicyNameTitle = 'Emergency Dial Routing Policy Name'
-            $SharedCallingEmergencyRoutingPolicyNameMsg   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
-            $SharedCallingEmergencyRoutingPolicyName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyRoutingPolicyNameTitle, $SharedCallingEmergencyRoutingPolicyNameMsg)
+            $SharedCallingEmergencyRoutingPolicyNameMsg = 'Emergency Dial Routing Policy Name'
+            $SharedCallingEmergencyRoutingPolicyNameTitle   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
+            $SharedCallingEmergencyRoutingPolicyName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyRoutingPolicyNameMsg, $SharedCallingEmergencyRoutingPolicyNameTitle)
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $SharedCallingEmergencyDialStringTitle = 'Emergency Dial String'
-            $SharedCallingEmergencyDialStringMsg   = 'Please provide the Emergency Dial String (e.g. 999):'
-            $SharedCallingEmergencyDialString = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyDialStringTitle, $SharedCallingEmergencyDialStringMsg)
+            $SharedCallingEmergencyDialStringMsg = 'Emergency Dial String'
+            $SharedCallingEmergencyDialStringTitle   = 'Please provide the Emergency Dial String (e.g. 999):'
+            $SharedCallingEmergencyDialString = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyDialStringMsg, $SharedCallingEmergencyDialStringTitle)
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $SharedCallingEmergencyDialMaskTitle = 'Emergency Dial Mask'
-            $SharedCallingEmergencyDialMaskMsg   = 'Please provide the Emergency Dial Mask (e.g. 999):'
-            $SharedCallingEmergencyDialMask = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyDialMaskTitle, $SharedCallingEmergencyDialMaskMsg)
+            $SharedCallingEmergencyDialMaskMsg = 'Emergency Dial Mask'
+            $SharedCallingEmergencyDialMaskTitle   = 'Please provide the Emergency Dial Mask (e.g. 999):'
+            $SharedCallingEmergencyDialMask = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyDialMaskMsg, $SharedCallingEmergencyDialMaskTitle)
             
             $en1 = New-CsTeamsEmergencyNumber -EmergencyDialString $SharedCallingEmergencyDialString -EmergencyDialMask $SharedCallingEmergencyDialMask
             New-CsTeamsEmergencyCallRoutingPolicy -Identity $SharedCallingEmergencyRoutingPolicyName -EmergencyNumbers @{add=$en1} -AllowEnhancedEmergencyServices:$true
@@ -320,9 +320,9 @@ function Set-SharedCallingVoiceConfiguration
             Write-LogFileMessage "Shared Calling Voice Routing Policy selected."
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $SharedCallingVRPNameTitle = 'Emergency Dial Routing Policy Name'
-            $SharedCallingVRPNameMsg   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
-            $SharedCallingVRPName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingVRPNameTitle, $SharedCallingVRPNameMsg)
+            $SharedCallingVRPNameMsg = 'Emergency Dial Routing Policy Name'
+            $SharedCallingVRPNameTitle   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
+            $SharedCallingVRPName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingVRPNameMsg, $SharedCallingVRPNameTitle)
                        
             New-CSOnlineVoiceRoutingPolicy -Identity $SharedCallingVRPName
 
@@ -342,9 +342,9 @@ function Set-SharedCallingVoiceConfiguration
             Write-LogFileMessage "Shared Caller ID Policy selected."
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-            $SharedCallerIDNameTitle = 'Caller ID Policy Name'
-            $SharedCallerIDNameMsg   = 'Please provide the Caller ID Policy Name (e.g. Shared Calling):'
-            $SharedCallerIDName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallerIDNameTitle, $SharedCallerIDNameMsg)
+            $SharedCallerIDNameMsg = 'Caller ID Policy Name'
+            $SharedCallerIDNameTitle   = 'Please provide the Caller ID Policy Name (e.g. Shared Calling):'
+            $SharedCallerIDName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallerIDNameMsg, $SharedCallerIDNameTitle)
                        
             $ObjId = (Get-CsOnlineApplicationInstance -Identity $global:SharedCallingAAUPN).ObjectId
             New-CsCallingLineIdentity -Identity $SharedCallerIDName -CallingIDSubstitute Resource -EnableUserOverride $false -ResourceAccount $ObjId
@@ -362,14 +362,14 @@ function Set-SharedCallingVoiceConfiguration
           $SharedCallingRA = Get-CsOnlineUser -Identity $global:SharedCallingAAUPN
 
           [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-          $EmergencyNumber1Title = 'Emergency callback number 1'
-          $EmergencyNumber1Msg   = 'Please provide the first Emergency callback number in E.164 format (e.g. +441632960999):'
-          $EmergencyNumber1 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber1Title, $EmergencyNumber1Msg)
+          $EmergencyNumber1Msg = 'Emergency callback number 1'
+          $EmergencyNumber1Title   = 'Please provide the first Emergency callback number in E.164 format (e.g. +441632960999):'
+          $EmergencyNumber1 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber1Msg, $EmergencyNumber1Title)
 
           [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-          $EmergencyNumber2Title = 'Emergency callback number 2'
-          $EmergencyNumber2Msg   = 'Please provide the second Emergency callback number in E.164 format (e.g. +441632960999):'
-          $EmergencyNumber2 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber2Title, $EmergencyNumber2Msg)
+          $EmergencyNumber2Msg = 'Emergency callback number 2'
+          $EmergencyNumber2Title   = 'Please provide the second Emergency callback number in E.164 format (e.g. +441632960999):'
+          $EmergencyNumber2 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber2Msg, $EmergencyNumber2Title)
 
           New-CsTeamsSharedCallingRoutingPolicy -Identity $global:SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity -EmergencyNumbers @{add=$EmergencyNumber1,$EmergencyNumber2}
 
