@@ -17,125 +17,15 @@ DISCLAIMER
    INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY TO YOU.
 #>
 
-################### GLOBAL VARIABLES ###################
+################### START OF GLOBAL VARIABLES ###################
 $SharedCallingDomain = "None"
 $SharedCallingAAName = "None"
 $SharedCallingAAUPN = $SharedCallingAAName + "@" + $SharedCallingDomain
-$EmergencyPolicySelection = "None"
-################### GLOBAL VARIABLES ###################
+$SharedCallingAANumber = "None"
+$EmergencyLocation = "None"
+################### END OF GLOBAL VARIABLES ###################
 
-################### SHARED CALLING TASK FUNCTIONS ###################
-
-### FUNCTION - Connects to relevant PowerShell Modules ###
-function Connect-PowerShell
-    {
-    Connect-AzureAD
-    Connect-MgGraph -Scopes "User.ReadWrite.All","Organization.Read.All"
-    Connect-MSOLService
-    Connect-ExchangeOnline
-    Connect-MicrosoftTeams
-    }
-
-### FUNCTION - Creates Resource Account ###
-function New-SharedCallingResourceAccount 
-    {
-    # Set Domain Name
-    [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-
-    $SharedCallingDomainTitle = 'Domain Name'
-    $SharedCallingDomainMsg   = 'Please provide the Domain Name to use (e.g. contoso.com):'
-        
-    $SharedCallingDomain = [Microsoft.VisualBasic.Interaction]::InputBox( $SharedCallingDomainTitle, $SharedCallingDomainMsg )
-
-    # Write to Host and Log File
-    Write-Host "Domain Name: $SharedCallingDomain"
-    Write-LogFileMessage "Domain Name: $SharedCallingDomain"
-
-    # Set Resource Account Name
-    [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
-
-    $SharedCallingAANameTitle = 'Auto Attendant Name'
-    $SharedCallingAANameMsg   = 'Please provide the Auto Attendant Name (e.g. AA-SharedCalling-UK):'
-     
-    $SharedCallingAAName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANameTitle, $SharedCallingAANameMsg)
-    
-    # Write to Host and Log File 
-    Write-Host "Resource Account Name: $SharedCallingAAName"
-    Write-LogFileMessage "Resource Account Name: $SharedCallingAAName"
-
-    # Set Resource Account UPN
-    $SharedCallingAAUPN = $SharedCallingAAName + "@" + $SharedCallingDomain
-    
-    # Write to Host and Log File
-    Write-Host "Resource Account UPN: $SharedCallingAAUPN"
-    Write-LogFileMessage "Resource Account UPN: $SharedCallingAAUPN"
-
-
-    # Create Resource Account 
-    New-CsOnlineApplicationInstance -UserPrincipalName "$SharedCallingAAUPN" -ApplicationId ce933385-9390-45d1-9512-c8d228074e07 -DisplayName "$SharedCallingAAName"
-    
-    # Assign Licensing Usage Location
-    Set-ScriptSleep 180 
-    Set-MsolUser -UserPrincipalName "$SharedCallingAAUPN" -UsageLocation GB
-    
-    # Assign Teams Phone Resource Account License
-    Set-ScriptSleep 180 
-    $TeamsResourceLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'PHONESYSTEM_VIRTUALUSER'
-    Set-MgUserLicense -UserId "$SharedCallingAAUPN" -addLicenses @{SkuId = $TeamsResourceLicenseSku.SkuId} -RemoveLicenses @()
-    }
-
-### FUNCTION - Configure Shared Calling Emergency Address ###
-function Set-SharedCallingEmergencyAddress
-    {
-        $EmergencyPolicySelection = [System.Windows.Forms.MessageBox]::Show("Use an existing Emergency Location?" , "Status" , 3, 32)
-
-        if ($EmergencyPolicySelection -eq "Yes") {
-            <# Action to perform if the answer is Yes #>
-            $EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
-            Write-Host "Existing Emergency Location selected"
-            Write-LogFileMessage "Existing Emergency Location selected"
-            Write-Host "Emergency Location: $EmergencyLocation"
-            Write-LogFileMessage "Emergency Location: $EmergencyLocation"
-        }elseif ($EmergencyPolicySelection -eq "No") {
-            Write-Host "New Emergency Location selected"
-            Write-LogFileMessage "New Emergency Location selected"
-            Write-Host "Emergency Location: $EmergencyLocation"
-            Write-LogFileMessage "Emergency Location: $EmergencyLocation"
-            
-            #Write-Host "No"
-        }
-        else {
-            <# Action when all if and elseif conditions are false #>
-            Write-Host "Cancelling Command..."
-            Write-LogFileMessage "Cancelling Command..."
-            return
-        }
-    }
-    
-
-### FUNCTION - Configure Shared Calling for Direct Routing numbers ###
-function New-SharedCallingDirectRoutingConfig
-    {
-        New-SharedCallingResourceAccount 
-        Set-SharedCallingEmergencyAddress
-    }
-
-### FUNCTION - Configure Shared Calling for Calling Plans numbers ###
-function New-SharedCallingCallingPlansConfig
-    {
-        New-SharedCallingResourceAccount 
-        Set-SharedCallingEmergencyAddress
-    }
-### FUNCTION - Configure Shared Calling for Operator Connect numbers ###
-function New-SharedCallingOperatorConnectConfig
-    {
-        New-SharedCallingResourceAccount 
-        Set-SharedCallingEmergencyAddress
-    }
-
-################### SHARED CALLING TASK FUNCTIONS ###################
-
-################### GENERIC SCRIPT FUNCTIONS ###################
+################### START OF GENERIC SCRIPT FUNCTIONS ###################
 
 ### FUNCTION - Write To Log File ###
 function Write-LogFileMessage($message) 
@@ -192,8 +82,286 @@ function ShowDisclaimer
 
     }
 
- ################### GENERIC SCRIPT FUNCTIONS ###################
+################### END OF GENERIC SCRIPT FUNCTIONS ###################
 
+################### START OF SHARED CALLING TASK FUNCTIONS ###################
+
+### FUNCTION - Connects to relevant PowerShell Modules ###
+function Connect-PowerShell
+    {
+    Connect-AzureAD
+    Connect-MgGraph -Scopes "User.ReadWrite.All","Organization.Read.All"
+    Connect-MSOLService
+    Connect-ExchangeOnline
+    Connect-MicrosoftTeams
+    }
+
+### FUNCTION - Creates Resource Account ###
+function New-SharedCallingResourceAccount 
+    {
+    # Set Domain Name
+    [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+    $SharedCallingDomainTitle = 'Domain Name'
+    $SharedCallingDomainMsg   = 'Please provide the Domain Name to use (e.g. contoso.com):'
+    $SharedCallingDomain = [Microsoft.VisualBasic.Interaction]::InputBox( $SharedCallingDomainTitle, $SharedCallingDomainMsg )
+
+    # Write to Host and Log File
+    Write-Host "Domain Name: $SharedCallingDomain"
+    Write-LogFileMessage "Domain Name: $SharedCallingDomain"
+
+    # Set Resource Account Name
+    [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+    $SharedCallingAANameTitle = 'Auto Attendant Name'
+    $SharedCallingAANameMsg   = 'Please provide the Auto Attendant Name (e.g. AA-SharedCalling-UK):'
+    $SharedCallingAAName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANameTitle, $SharedCallingAANameMsg)
+    
+    # Write to Host and Log File 
+    Write-Host "Resource Account Name: $SharedCallingAAName"
+    Write-LogFileMessage "Resource Account Name: $SharedCallingAAName"
+
+    # Set Phone Number
+    [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+    $SharedCallingAANumberTitle = 'Auto Attendant Number'
+    $SharedCallingAANumberMsg   = 'Please provide the Auto Attendant Phone Number in E.164 format (e.g. +441632969000):'
+    $SharedCallingAANumber = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAANumberTitle, $SharedCallingAANumberMsg)
+    
+    # Write to Host and Log File 
+    Write-Host "Resource Account Number: $SharedCallingAANumber"
+    Write-LogFileMessage "Resource Account Number: $SharedCallingAANumber"
+
+    # Set Resource Account UPN
+    $SharedCallingAAUPN = $SharedCallingAAName + "@" + $SharedCallingDomain
+    
+    # Write to Host and Log File
+    Write-Host "Resource Account UPN: $SharedCallingAAUPN"
+    Write-LogFileMessage "Resource Account UPN: $SharedCallingAAUPN"
+
+
+    # Create Resource Account 
+    New-CsOnlineApplicationInstance -UserPrincipalName "$SharedCallingAAUPN" -ApplicationId ce933385-9390-45d1-9512-c8d228074e07 -DisplayName "$SharedCallingAAName"
+    
+    # Assign Licensing Usage Location
+    Set-ScriptSleep 180 
+    Set-MsolUser -UserPrincipalName "$SharedCallingAAUPN" -UsageLocation GB
+    
+    # Assign Teams Phone Resource Account License
+    Set-ScriptSleep 180 
+    $TeamsResourceLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'PHONESYSTEM_VIRTUALUSER'
+    Set-MgUserLicense -UserId "$SharedCallingAAUPN" -addLicenses @{SkuId = $TeamsResourceLicenseSku.SkuId} -RemoveLicenses @()
+    }
+
+### FUNCTION - Configure Shared Calling Emergency Address ###
+function Set-SharedCallingEmergencyAddress
+    {
+        $EmergencyLocationSelection = [System.Windows.Forms.MessageBox]::Show("Use an existing Emergency Location?" , "Input Required" , 4, 64)
+
+        if ($EmergencyLocationSelection -eq "Yes") {
+            <# Action to perform if the answer is Yes #>
+            $EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
+            Write-Host "Existing Emergency Location selected"
+            Write-LogFileMessage "Existing Emergency Location selected"
+            Write-Host "Emergency Location: $EmergencyLocation.LocationID"
+            Write-LogFileMessage "Emergency Location: $EmergencyLocation.LocationID"
+        }elseif ($EmergencyLocationSelection -eq "No") {
+            Write-Host "New Emergency Location selected"
+            Write-LogFileMessage "New Emergency Location selected"
+            Write-Host "Emergency Location: $EmergencyLocation.LocationID"
+            Write-LogFileMessage "Emergency Location: $EmergencyLocation.LocationID"
+        }
+    }
+### FUNCTION - Create Auto Attendant ###
+function New-SharedCallingAutoAttendant
+    {
+        [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+        $SharedCallingAAGreetingTitle = 'Auto Attendant Greeting'
+        $SharedCallingAAGreetingMsg   = 'Please provide the Auto Attendant Greeting (e.g. Welcome to Contoso!):'
+        $SharedCallingAAGreeting = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAAGreetingTitle, $SharedCallingAAGreetingMsg)
+
+        [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+        $SharedCallingAAPromptTitle = 'Auto Attendant Prompt'
+        $SharedCallingAAPromptMsg   = 'Please provide the Auto Attendant Prompt (e.g. If you know the extension you require, dial it now):'
+        $SharedCallingAAPrompt = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingAAPromptTitle, $SharedCallingAAPromptMsg)
+
+        $greetingPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAGreeting
+        $menuPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAPrompt
+        $defaultMenu = New-CsAutoAttendantMenu -Name "Default menu" -Prompts @($menuPrompt) -EnableDialByName -DirectorySearchMethod ByName
+        $defaultCallFlow = New-CsAutoAttendantCallFlow -Name "Default call flow" -Menu $defaultMenu -Greetings @($greetingPrompt)
+        $aa = New-CsAutoAttendant -Name $SharedCallingAAName -DefaultCallFlow $defaultCallFlow -EnableVoiceResponse -LanguageId "en-GB" -TimeZoneId "GMT Standard Time" 
+
+        ### Assign Resource Account
+        $applicationInstanceId = (Get-CsOnlineUser $SharedCallingAAUPN).Identity
+        $autoAttendantId = (Get-CsAutoAttendant -NameFilter $SharedCallingAAName).Id
+        New-CsOnlineApplicationInstanceAssociation -Identities @($applicationInstanceId) -ConfigurationId $autoAttendantId -ConfigurationType AutoAttendant
+
+    }
+
+### FUNCTION - Shared Calling Voice Configuration ###
+function Set-SharedCallingVoiceConfiguration
+    {
+      $EmergencyCallRoutingPolicySelection = [System.Windows.Forms.MessageBox]::Show("Create a new Emergency Call Routing Policy?" , "Input Required" , 4, 64)
+
+        if ($EmergencyCallRoutingPolicySelection -eq "No") {
+          Write-Host "Existing Emergency Call Routing Policy selected"
+          Write-LogFileMessage "Existing Emergency Call Routing Policy selected"
+
+        }elseif ($EmergencyPolicySelection -eq "Yes") {
+            
+            Write-Host "New Emergency Call Routing Policy selected"
+            Write-LogFileMessage "New Emergency Call Routing Policy selected"
+
+            [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+            $SharedCallingEmergencyRoutingPolicyNameTitle = 'Emergency Dial Routing Policy Name'
+            $SharedCallingEmergencyRoutingPolicyNameMsg   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
+            $SharedCallingEmergencyRoutingPolicyName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyRoutingPolicyNameTitle, $SharedCallingEmergencyRoutingPolicyNameMsg)
+
+            [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+            $SharedCallingEmergencyDialStringTitle = 'Emergency Dial String'
+            $SharedCallingEmergencyDialStringMsg   = 'Please provide the Emergency Dial String (e.g. 999):'
+            $SharedCallingEmergencyDialString = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyDialStringTitle, $SharedCallingEmergencyDialStringMsg)
+
+            [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+            $SharedCallingEmergencyDialMaskTitle = 'Emergency Dial Mask'
+            $SharedCallingEmergencyDialMaskMsg   = 'Please provide the Emergency Dial Mask (e.g. 999):'
+            $SharedCallingEmergencyDialMask = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingEmergencyDialMaskTitle, $SharedCallingEmergencyDialMaskMsg)
+            
+            $en1 = New-CsTeamsEmergencyNumber -EmergencyDialString $SharedCallingEmergencyDialString -EmergencyDialMask $SharedCallingEmergencyDialMask
+            New-CsTeamsEmergencyCallRoutingPolicy -Identity $SharedCallingEmergencyRoutingPolicyName -EmergencyNumbers @{add=$en1} -AllowEnhancedEmergencyServices:$true
+
+            Write-Host "Emergency Call Routing Policy: $EmergencyCallRoutingPolicy"
+            Write-LogFileMessage "Emergency Call Routing Policy: $EmergencyCallRoutingPolicy"
+        }
+
+        $VoiceRoutingPolicySharedCallingSelection = [System.Windows.Forms.MessageBox]::Show("Create a new Shared Calling Voice Routing Policy?" , "Shared Calling Voice Routing Policy creation" , 4, 64)
+
+        if ($VoiceRoutingPolicySharedCallingSelection -eq "No") {
+          Write-Host "Existing Shared Calling Voice Routing Policy selected"
+          Write-LogFileMessage "Existing Shared Calling Voice Routing Policy selected"
+
+        }elseif ($VoiceRoutingPolicySharedCallingSelection -eq "Yes") {
+            
+            Write-Host "New Shared Calling Voice Routing Policy selected"
+            Write-LogFileMessage "Shared Calling Voice Routing Policy selected"
+
+            [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+            $SharedCallingVRPNameTitle = 'Emergency Dial Routing Policy Name'
+            $SharedCallingVRPNameMsg   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
+            $SharedCallingVRPName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingVRPNameTitle, $SharedCallingVRPNameMsg)
+                       
+            New-CSOnlineVoiceRoutingPolicy -Identity $SharedCallingVRPName
+
+            Write-Host "New Shared Calling Voice Routing Policy: $SharedCallingVRPName"
+            Write-LogFileMessage "New Shared Calling Voice Routing Policy: $SharedCallingVRPName"
+        }
+
+        $CallerIDSelection = [System.Windows.Forms.MessageBox]::Show("Create a new Caller ID Policy?" , "Caller ID creation" , 4, 64)
+
+        if ($CallerIDSelection -eq "No") {
+          Write-Host "Existing Caller ID Policy selected"
+          Write-LogFileMessage "Existing Caller ID Policy selected"
+
+        }elseif ($CallerIDSelection -eq "Yes") {
+            
+            Write-Host "New Caller ID Policy selected"
+            Write-LogFileMessage "Shared Caller ID Policy selected"
+
+            [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+            $SharedCallerIDNameTitle = 'Caller ID Policy Name'
+            $SharedCallerIDNameMsg   = 'Please provide the Caller ID Policy Name (e.g. Shared Calling):'
+            $SharedCallerIDName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallerIDNameTitle, $SharedCallerIDNameMsg)
+                       
+            $ObjId = (Get-CsOnlineApplicationInstance -Identity $SharedCallingAAUPN).ObjectId
+            New-CsCallingLineIdentity -Identity $SharedCallerIDName -CallingIDSubstitute Resource -EnableUserOverride $false -ResourceAccount $ObjId
+
+            Write-Host "New Shared Calling Voice Routing Policy: $SharedCallerIDName"
+            Write-LogFileMessage "New Shared Calling Voice Routing Policy: $SharedCallerIDName"
+        }
+
+        $SharedCallingPolicySelection = [System.Windows.Forms.MessageBox]::Show("Do you require emergency callback numbers?" , "Shared Calling Policy Creation" , 4, 64)
+
+        if ($SharedCallingPolicySelection -eq "Yes") {
+          Write-Host "Emergency callback numbers required"
+          Write-LogFileMessage "Emergency callback numbers required"
+
+          [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+          $EmergencyNumber1Title = 'Emergency callback number 1'
+          $EmergencyNumber1Msg   = 'Please provide the first Emergency callback number in E.164 format (e.g. +441632960999):'
+          $EmergencyNumber1 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber1Title, $EmergencyNumber1Msg)
+
+          [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+          $EmergencyNumber2Title = 'Emergency callback number 2'
+          $EmergencyNumber2Msg   = 'Please provide the second Emergency callback number in E.164 format (e.g. +441632960999):'
+          $EmergencyNumber2 = [Microsoft.VisualBasic.Interaction]::InputBox($EmergencyNumber2Title, $EmergencyNumber2Msg)
+
+          New-CsTeamsSharedCallingRoutingPolicy -Identity $SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity -EmergencyNumbers @{add=$EmergencyNumber1,$EmergencyNumber2}
+
+        }elseif ($SharedCallingPolicySelection -eq "No") {
+            
+            Write-Host "Emergency callback numbers not required"
+            Write-LogFileMessage "Emergency callback numbers not required"
+
+            $SharedCallingRA = Get-CsOnlineUser -Identity $SharedCallingAAUPN
+            New-CsTeamsSharedCallingRoutingPolicy -Identity $SharedCallingAAName -ResourceAccount $SharedCallingRA.Identity
+
+        }
+
+    }
+
+### FUNCTION - Configure Shared Calling for Direct Routing numbers ###
+function New-SharedCallingDirectRoutingConfig
+    {
+        New-SharedCallingResourceAccount 
+        Set-SharedCallingEmergencyAddress
+
+        $RAVoiceRoutingPolicy = Get-CsOnlineVoiceRoutingPolicy | Select-Object Identity, Description | Out-GridView -OutputMode Single -Title "Please select a Voice Routing Policy"
+        Write-Host $RAVoiceRoutingPolicy.Identity "is your chosen Voice Routing Policy"
+        Grant-CsOnlineVoiceRoutingPolicy -PolicyName $RAVoiceRoutingPolicy -Identity $SharedCallingAAUPN
+
+        New-SharedCallingAutoAttendant
+        
+        Set-CsPhoneNumberAssignment -Identity $SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $SharedCallingAANumber –PhoneNumberType DirectRouting
+        
+        Set-SharedCallingVoiceConfiguration
+    }
+
+### FUNCTION - Configure Shared Calling for Calling Plans numbers ###
+function New-SharedCallingCallingPlansConfig
+    {
+        New-SharedCallingResourceAccount 
+        Set-SharedCallingEmergencyAddress
+        ### Assign Pay-as-you go calling plan (Zone-1 countries i.e. UK)
+        $PAYGCallingZone1LicenseSku = Get-MgSubscribedSku -All | Where SkuPartNumber -eq 'Microsoft_Teams_Calling_Plan_pay_as_you_go_(country_zone_1)'
+        Set-MgUserLicense -UserId $SharedCallingAAUPN -addLicenses @{SkuId = $PAYGCallingZone1LicenseSku.SkuId} -RemoveLicenses @()
+        
+        ### PAUSE - wait a few minutes for the above cmdlet configuration to be completed
+        Set-ScriptSleep 180 
+
+        ### Assign communication credits       
+        $CommunicationCreditsLicenseSku = Get-MgSubscribedSku -All | Where SkuPartNumber -eq 'MCOPSTNC'
+        Set-MgUserLicense -UserId $SharedCallingAAUPN -addLicenses @{SkuId = $CommunicationCreditsLicenseSku.SkuId} -RemoveLicenses @()
+
+        New-SharedCallingAutoAttendant
+
+        Set-CsPhoneNumberAssignment -Identity $SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $SharedCallingAANumber –PhoneNumberType CallingPlan
+        
+        Set-SharedCallingVoiceConfiguration
+    }
+### FUNCTION - Configure Shared Calling for Operator Connect numbers ###
+function New-SharedCallingOperatorConnectConfig
+    {
+        New-SharedCallingResourceAccount 
+        Set-SharedCallingEmergencyAddress
+        New-SharedCallingAutoAttendant
+
+        Set-CsPhoneNumberAssignment -Identity $SharedCallingAAUPN -LocationID $LocationID.Identity -PhoneNumber $SharedCallingAANumber –PhoneNumberType OperatorConnect
+        
+        Set-SharedCallingVoiceConfiguration
+    }
+
+################### END OF SHARED CALLING TASK FUNCTIONS ###################
+
+################### START OF COMMANDS ###################
+
+ShowDisclaimer
 
 # Enable File Saver for Log File
 [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
@@ -267,7 +435,7 @@ If (-not(Get-InstalledModule AzureADPreview -ErrorAction silentlycontinue)) {
 
 #Shows Script Menu
 ShowMenu –Title 'Script Options'
- $selection = Read-Host "Please choose your telephony configuration option" 
+ $selection = Read-Host "Please choose your telephony configuration option." 
  switch ($selection)
  {
      '1' {
@@ -286,3 +454,5 @@ ShowMenu –Title 'Script Options'
          return
      }
  }
+################### END OF COMMANDS ###################
+

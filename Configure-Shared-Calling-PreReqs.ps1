@@ -18,27 +18,6 @@ DISCLAIMER
 #>
 
 ################### START OF GENERIC SCRIPT FUNCTIONS ###################
-
-### FUNCTION - Write To Log File ###
-function Write-LogFileMessage($message) 
-    {
-        $ActionTime = $(Get-Date).ToString("dd/MM/yyyy HH:mm:ss")
-        Write-Debug "$ActionTime :: $message"
-    "$ActionTime :: $message" | Out-File -FilePath $LogFile -Append
-    }
-
-### FUNCTION - Progress Bar Function ###
-Function Set-ScriptSleep($seconds)
-    {
-        $s = 0;
-        Do {
-            $p = [math]::Round(100 - (($seconds - $s) / $seconds * 100));
-            Write-Progress -Activity "Waiting..." -Status "$p% Complete:" -SecondsRemaining ($seconds - $s) -PercentComplete $p;
-            [System.Threading.Thread]::Sleep(1000)
-            $s++;
-        }
-        While($s -lt $seconds); 
-    }
 function ShowDisclaimer
     {
 
@@ -64,107 +43,99 @@ function ShowDisclaimer
  ################### START OF INSTALL MODULE FUNCTIONS ###################
 Function Install-AzureADPreview
     {
-    Install-Module AzureADPreview
+    Install-Module AzureADPreview -Force
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
-    Write-LogFileMessage "AzureADPreview Module Installed"
+    Write-Host "AzureADPreview module installed." -ForegroundColor Green
     }
 Function Install-MicrosoftGraph 
     {
     Install-Module Microsoft.Graph
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
-    Write-LogFileMessage "MicrosoftGraph Module Installed"
+    Write-Host "Microsoft.Graph module installed." -ForegroundColor Green
     }
 Function Install-MSOnline
     {
     Install-Module MSOnline
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
-    Write-LogFileMessage "MSOnline Module Installed"
+    Write-Host "MSOnline module installed." -ForegroundColor Green
     }
 Function Install-ExchangeOnlineManagement
     {
     Install-Module ExchangeOnlineManagement
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
-    Write-LogFileMessage "ExchangeOnlineManagement Module Installed"
+    Write-Host "ExchangeOnlineManagement module installed." -ForegroundColor Green
     }
 Function Install-MicrosoftTeams
     {
     Install-Module MicrosoftTeams
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
-    Write-LogFileMessage "MicrosoftTeams Module Installed"
+    Write-Host "MicrosoftTeams module installed." -ForegroundColor Green
     }
 
 ################### END OF INSTALL MODULE FUNCTIONS ###################
 
 ################### START OF COMMANDS ###################
 
-# Enable File Saver for Log File
-[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
-
-# Set Log File Location 
-Write-Host "Please select the Log file location."
-$LogSaver = New-Object -Typename System.Windows.Forms.SaveFileDialog
-$LogSaver.initialDirectory = $initialDirectory
-$LogSaver.filter = "All files (*.log)| *.log"
-$LogSaver.ShowDialog() | Out-Null
-$LogFile = $LogSaver.filename
-
 ShowDisclaimer
+
+Write-Host "Checking for elevated permissions..."
+if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Warning "Insufficient permissions to run this script. Open the PowerShell console as an administrator and run this script again."
+    Break
+} else {
+    Write-Host "Script is running as administrator. Moving on..." -ForegroundColor Green
+}
 
 # Installs Powershell Modules, if not already installed
 Write-Host "Checking for PowerShell Modules" -ForegroundColor Gray -BackgroundColor Black
-Write-LogFileMessage "Checking for PowerShell Modules"
+
 #AzureADPreview
 If (-not(Get-InstalledModule AzureADPreview -ErrorAction silentlycontinue)) {
-    Write-Host "AzureADPreview module does not exist"
-    Write-LogFileMessage "AzureADPreview module does not exist"
+    Write-Host "AzureADPreview module does not exist" -ForegroundColor DarkRed
+    Write-Host "AzureADPreview module will be installed" 
     Install-AzureADPreview
   }
   Else {
-    Write-Host "AzureADPreview module exists"
-    Write-LogFileMessage "AzureADPreview module exists"
+    Write-Host "AzureADPreview module exists" -ForegroundColor Green
   }
   
 #Microsoft.Graph
   If (-not(Get-InstalledModule Microsoft.Graph -ErrorAction silentlycontinue)) {
-    Write-Host "Microsoft.Graph module does not exist"
-    Write-LogFileMessage "Microsoft.Graph module does not exist"
+    Write-Host "Microsoft.Graph module does not exist" -ForegroundColor DarkRed
+    Write-Host "Microsoft.Graph module will be installed"
     Install-MicrosoftGraph
   }
   Else {
-    Write-Host "Microsoft.Graph module exists"
-    Write-LogFileMessage "Microsoft.Graph module exists"
+    Write-Host "Microsoft.Graph module exists" -ForegroundColor Green
   }
   
 #MSOnline
   If (-not(Get-InstalledModule MSOnline -ErrorAction silentlycontinue)) {
-    Write-Host "MSOnline module does not exist"
-    Write-LogFileMessage "MSOnline module does not exist"
+    Write-Host "MSOnline module does not exist" -ForegroundColor DarkRed
+    Write-Host "MSOnline module will be installed"
     Install-MSOnline
   }
   Else {
-    Write-Host "MSOnline module exists"
-    Write-LogFileMessage "MSOnline module exists"
+    Write-Host "MSOnline module exists" -ForegroundColor Green
   }
   
 #ExchangeOnlineManagement
   If (-not(Get-InstalledModule ExchangeOnlineManagement -ErrorAction silentlycontinue)) {
-    Write-Host "ExchangeOnlineManagement module does not exist"
-    Write-LogFileMessage "ExchangeOnlineManagement module does not exist"
+    Write-Host "ExchangeOnlineManagement module does not exist" -ForegroundColor DarkRed
+    Write-Host "ExchangeOnlineManagement module will be installed"
     Install-ExchangeOnlineManagement
   }
   Else {
-    Write-Host "ExchangeOnlineManagement module exists"
-    Write-LogFileMessage "ExchangeOnlineManagement module exists"
+    Write-Host "ExchangeOnlineManagement module exists" -ForegroundColor Green
   }
 
 #MicrosoftTeams
   If (-not(Get-InstalledModule MicrosoftTeams -ErrorAction silentlycontinue)) {
-    Write-Host "MicrosoftTeams module does not exist"
-    Write-LogFileMessage "MicrosoftTeams module does not exist"
+    Write-Host "MicrosoftTeams module does not exist" -ForegroundColor DarkRed
+    Write-Host "MicrosoftTeams module will be installed"
     Install-MicrosoftTeams
   }
   Else {
-    Write-Host "MicrosoftTeams module exists"
-    Write-LogFileMessage "MicrosoftTeams module exists"
+    Write-Host "MicrosoftTeams module exists" -ForegroundColor Green
   } 
 ################### END OF COMMANDS ###################
