@@ -156,11 +156,11 @@ function New-SharedCallingResourceAccount
     New-CsOnlineApplicationInstance -UserPrincipalName "$global:SharedCallingAAUPN" -ApplicationId ce933385-9390-45d1-9512-c8d228074e07 -DisplayName "$global:SharedCallingAAName"
     
     # Assign Licensing Usage Location
-    Set-ScriptSleep 180 
+    Set-ScriptSleep 120 
     Set-MsolUser -UserPrincipalName "$global:SharedCallingAAUPN" -UsageLocation GB
     
     # Assign Teams Phone Resource Account License
-    Set-ScriptSleep 180 
+    Set-ScriptSleep 120 
     $TeamsResourceLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'PHONESYSTEM_VIRTUALUSER'
     Set-MgUserLicense -UserId "$global:SharedCallingAAUPN" -addLicenses @{SkuId = $TeamsResourceLicenseSku.SkuId} -RemoveLicenses @()
     
@@ -456,7 +456,7 @@ function New-SharedCallingCallingPlansConfig
         Set-MgUserLicense -UserId $global:SharedCallingAAUPN -addLicenses @{SkuId = $PAYGCallingZone1LicenseSku.SkuId} -RemoveLicenses @()
         
       ### PAUSE - wait a few minutes for the above cmdlet configuration to be completed
-        Set-ScriptSleep 180
+        Set-ScriptSleep 120
       
       ### Assign communication credits       
         $CommunicationCreditsLicenseSku = Get-MgSubscribedSku -All | Where-Object SkuPartNumber -eq 'MCOPSTNC'
