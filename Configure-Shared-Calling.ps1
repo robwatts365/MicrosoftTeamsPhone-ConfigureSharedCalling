@@ -321,7 +321,7 @@ function Set-SharedCallingVoiceConfiguration
 
             [void][Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
             $SharedCallingVRPNameMsg = 'Emergency Dial Routing Policy Name'
-            $SharedCallingVRPNameTitle   = 'Please provide the Emergency Call Routing Policy Name (e.g. UK-ECRP):'
+            $SharedCallingVRPNameTitle   = 'Please provide the Shared Calling Voice Routing Policy Name (e.g. UK-SharedCallingPolicy):'
             $SharedCallingVRPName = [Microsoft.VisualBasic.Interaction]::InputBox($SharedCallingVRPNameTitle, $SharedCallingVRPNameMsg)
                        
             New-CSOnlineVoiceRoutingPolicy -Identity $SharedCallingVRPName
