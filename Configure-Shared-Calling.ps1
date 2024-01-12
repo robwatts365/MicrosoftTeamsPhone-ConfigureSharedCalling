@@ -177,8 +177,8 @@ function Set-SharedCallingEmergencyAddress
             $global:EmergencyLocation = Get-CsOnlineLisCivicAddress | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
             Write-Host "Existing Emergency Location selected."
             Write-LogFileMessage "Existing Emergency Location selected."
-            Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
-            Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.LocationID
+            Write-Host "Emergency Location:" $global:EmergencyLocation.CivicAddressId
+            Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.CivicAddressId
             
         }elseif ($EmergencyLocationSelection -eq "No") {
             Write-Host "New Emergency Location selected."
@@ -238,8 +238,8 @@ function Set-SharedCallingEmergencyAddress
             New-CsOnlineLisCivicAddress -HouseNumber $EmergencyLocationHouse -StreetName $EmergencyLocationStreet -City $EmergencyLocationCity -StateorProvince $EmergencyLocationState -CountryOrRegion $EmergencyLocationCountry -PostalCode $EmergencyLocationPostCode -Description $EmergencyLocationDesc -CompanyName $EmergencyLocationCompany -Latitude $EmergencyLocationLatitude -Longitude $EmergencyLocationLongitude
             $global:EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select the newly created Emergency Location"
             
-            Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
-            Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.LocationID
+            Write-Host "Emergency Location:" $global:EmergencyLocation.CivicAddressId
+            Write-LogFileMessage "Emergency Location:" $global:EmergencyLocation.CivicAddressId
             
         }
         return $global:EmergencyLocation
@@ -424,7 +424,7 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host $RAVoiceRoutingPolicy.Identity "is your chosen Voice Routing Policy"
         Write-LogFileMessage $RAVoiceRoutingPolicy.Identity "is your chosen Voice Routing Policy"
 
-        Grant-CsOnlineVoiceRoutingPolicy -PolicyName $RAVoiceRoutingPolicy -Identity $global:SharedCallingAAUPN
+        Grant-CsOnlineVoiceRoutingPolicy -PolicyName $RAVoiceRoutingPolicy.Identity -Identity $global:SharedCallingAAUPN
 
         Write-Host "Shared Calling Voice Routing Policy tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Voice Routing Policy tasks completed."
@@ -434,7 +434,7 @@ function New-SharedCallingDirectRoutingConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
         
-        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.LocationID -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType DirectRouting
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.CivicAddressId -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType DirectRouting
         
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
@@ -492,7 +492,7 @@ function New-SharedCallingCallingPlansConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
 
-        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.LocationID -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType CallingPlan
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.CivicAddressId -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType CallingPlan
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
 
@@ -534,7 +534,7 @@ function New-SharedCallingOperatorConnectConfig
         Write-Host "Shared Calling Auto Attendant tasks completed." -ForegroundColor Green
         Write-LogFileMessage "Shared Calling Auto Attendant tasks completed."
 
-        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.LocationID -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType OperatorConnect
+        Set-CsPhoneNumberAssignment -Identity $global:SharedCallingAAUPN -LocationID $global:EmergencyLocation.CivicAddressId -PhoneNumber $global:SharedCallingAANumber -PhoneNumberType OperatorConnect
         
         Write-Host "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN." -ForegroundColor Green
         Write-LogFileMessage "Shared Resource Account Phone Number ($global:SharedCallingAANumber) assigned to $global:SharedCallingAAUPN."
