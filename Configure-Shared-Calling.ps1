@@ -174,7 +174,7 @@ function Set-SharedCallingEmergencyAddress
 
         if ($EmergencyLocationSelection -eq "Yes") {
             <# Action to perform if the answer is Yes #>
-            $global:EmergencyLocation = Get-CsOnlineLisLocation | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
+            $global:EmergencyLocation = Get-CsOnlineLisCivicAddress | Select-Object CompanyName,Description, HouseNumber, StreetName, City, Postcode,CountryOrRegion, LocationID | Out-GridView -OutputMode Single -Title "Please select an Emergency Location"
             Write-Host "Existing Emergency Location selected."
             Write-LogFileMessage "Existing Emergency Location selected."
             Write-Host "Emergency Location:" $global:EmergencyLocation.LocationID
