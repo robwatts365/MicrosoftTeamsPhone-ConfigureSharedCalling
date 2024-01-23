@@ -1,6 +1,6 @@
 ﻿<# 
 Configure Shared Calling
-    Version: v1.1
+    Version: v1.2
     Date: 23/01/2024
     Author: Rob Watts - Cloud Solution Architect - Microsoft
     Description: This script will configure the Shared Calling feature for Microsoft Teams
@@ -259,7 +259,7 @@ function New-SharedCallingAutoAttendant
 
         $greetingPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAGreeting
         $menuPrompt = New-CsAutoAttendantPrompt -TextToSpeechPrompt $SharedCallingAAPrompt
-        $defaultMenu = New-CsAutoAttendantMenu -Name "Default menu" -Prompts @($menuPrompt) -EnableDialByName -DirectorySearchMethod ByName
+        $defaultMenu = New-CsAutoAttendantMenu -Name "Default menu" -Prompts @($menuPrompt) -EnableDialByName -DirectorySearchMethod ByExtension
         $defaultCallFlow = New-CsAutoAttendantCallFlow -Name "Default call flow" -Menu $defaultMenu -Greetings @($greetingPrompt)
         New-CsAutoAttendant -Name $global:SharedCallingAAName -DefaultCallFlow $defaultCallFlow -EnableVoiceResponse -LanguageId "en-GB" -TimeZoneId "GMT Standard Time" | Out-File -FilePath $LogFile -Append
 
