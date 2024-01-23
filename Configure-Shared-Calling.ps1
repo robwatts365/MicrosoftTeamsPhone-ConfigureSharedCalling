@@ -1,7 +1,7 @@
 ﻿<# 
 Configure Shared Calling
-    Version: v1.0
-    Date: 11/01/2024
+    Version: v1.1
+    Date: 23/01/2024
     Author: Rob Watts - Cloud Solution Architect - Microsoft
     Description: This script will configure the Shared Calling feature for Microsoft Teams
 
