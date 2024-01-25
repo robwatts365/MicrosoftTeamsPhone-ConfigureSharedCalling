@@ -26,7 +26,7 @@
 *	Optional - telephone number(s) for emergency callback
 
  > [!TIP]
-> As a starting place, it's best to review the [Considerations for deploying Shared Calling](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/wiki/Considerations).
+> As a starting place, it's best to review the [Considerations for deploying Shared Calling](/docs/2-Considerations.md).
 
 ## Background
 This project was started to help Microsoft customers deploy Shared Calling for Microsoft Teams Phone. The project consists of interactive powershell scripts that guide IT admins through the process of setting up Shared Calling features for Microsoft Teams Phone. Here you can find the source code, documentation, and instructions on how to use the scripts. It is recommended that you download the latest release of the project directly from this GitHub repository. Find the latest release [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/releases).
@@ -36,7 +36,7 @@ The project aims to make it easier and faster for IT admins to configure and dep
 The project is open source and welcomes contributions from the community. 
 
 ## Documentation
-For all documentation, please see the Wiki site within this repository, found [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/wiki).
+For all documentation, please see the Docs pages within this repository, found [here](/docs/).
 
 ## Support
 If you encounter any bugs or issues while using the scripts, please raise them as issues [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/issues) in this GitHub repository. You can also submit pull requests with your suggestions or improvements to the code. The project team appreciates your feedback and support. 
