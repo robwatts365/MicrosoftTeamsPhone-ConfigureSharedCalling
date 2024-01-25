@@ -35,6 +35,9 @@ The project aims to make it easier and faster for IT admins to configure and dep
 
 The project is open source and welcomes contributions from the community. 
 
+## Documentation
+For all documentation, please see the Wiki site within this repository, found [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/wiki).
+
 ## Support
 If you encounter any bugs or issues while using the scripts, please raise them as issues [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/issues) in this GitHub repository. You can also submit pull requests with your suggestions or improvements to the code. The project team appreciates your feedback and support. 
 
