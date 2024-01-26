@@ -1,8 +1,4 @@
-| Page | Instructions |
-| :--- | :--- |
-| Author | Rob Watts ([@robwatts365](https://github.com/robwatts365)) |
-| **Version** | 1.0 |
-| **Date** | 25/01/2024 |
+# Deployment Guide
 
 ## Pre-requisites
 * PowerShell modules:
@@ -77,3 +73,8 @@ Once you have all required PowerShell modules installed, you may move on to the 
 
 1. 
 
+| Page | Deployment Guide |
+| :--- | :--- |
+| Author | Rob Watts ([@robwatts365](https://github.com/robwatts365)) |
+| **Version** | 1.1 |
+| **Date** | 26/01/2024 |
