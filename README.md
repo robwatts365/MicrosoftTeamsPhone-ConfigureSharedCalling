@@ -24,7 +24,7 @@ If you encounter any bugs or issues while using the scripts, please raise them a
 Thank you for using this project and I hope you find it useful and helpful. 😊
 
  > [!TIP]
-> As a starting place, it's best to review the [Considerations for deploying Shared Calling](/docs/2-Considerations.md).
+> As a starting place, it's best to review the [Considerations for deploying Shared Calling](/docs/considerations).
 
 ## Pre-requisites
 * PowerShell modules:
@@ -40,6 +40,10 @@ Thank you for using this project and I hope you find it useful and helpful. 😊
 *	Shared telephone phone number for inbound and outbound calling
 *	Microsoft Phone System licensing for users (E5 or other licences with Phone System Standard)
 *	Optional - telephone number(s) for emergency callback
+
+## Instructions
+Please find step-by-step guidance on the [instructions](/docs/instructions/) page.  
+If you think something is missing, please raise them as issues [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/issues).
 
 ## Disclaimer
 > [!IMPORTANT]
