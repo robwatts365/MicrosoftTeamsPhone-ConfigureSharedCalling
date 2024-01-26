@@ -3,8 +3,8 @@
 | Name | README.md |
 | :--- | :--- |
 | Author | Rob Watts ([@robwatts365](https://github.com/robwatts365)) |
-| **Version** | 1.0 |
-| **Date** | 25/01/2024 |
+| **Version** | 1.1 |
+| **Date** | 26/01/2024 |
 
 ## Background
 This project was started to help Microsoft customers deploy Shared Calling for Microsoft Teams Phone. The project consists of interactive powershell scripts that guide IT admins through the process of setting up Shared Calling features for Microsoft Teams Phone. Here you can find the source code, documentation, and instructions on how to use the scripts. It is recommended that you download the latest release of the project directly from this GitHub repository. Find the latest release [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/releases).
