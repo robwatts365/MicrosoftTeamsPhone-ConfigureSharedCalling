@@ -4,11 +4,7 @@
 | **Version** | 1.0 |
 | **Date** | 25/01/2024 |
 
-## 1. Pre-requisites  
-*	Microsoft Teams Phone Resource Account
-*	Shared telephone phone number for inbound and outbound calling
-*	Microsoft Phone System licensing for users (E5 or other licences with Phone System Standard)
-*	Optional - telephone number(s) for emergency callback
+## Pre-requisites
 * PowerShell modules:
   * AzureADPreview
   * Microsoft.Graph
@@ -18,8 +14,21 @@
  > [!NOTE]
   >  These will be installed  for you by the [pre-requisites script](1-ConfigureSharedCalling-PreReqs.ps1)
 
+*	Microsoft Teams Phone Resource Account licensing
+*	Shared telephone phone number for inbound and outbound calling (Must be enabled for Voice app usage)
+*	Microsoft Phone System licensing for users (E5 or other licences with Phone System Standard)
+*	Optional - telephone number(s) for emergency callback
 
-  
+### For Direct Routing deployments:
+* Your SBC is deployed and working correctly.
+* Teams voice routing configuration has been completed.
+### For Calling Plans deployments:
+* Pay-as-you go (PAYG) calling plan is purchased and ready to be assigned.
+* Communication credits licence is purchased and has funds.
+### For Operator Connect deployments:
+* You have an enabled Operator Connect carrier.
+
+1. If required, run the Configure-SharedCalling-PreReqs PowerShell script - [1-ConfigureSharedCalling-PreReqs.ps1](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/blob/main/1-ConfigureSharedCalling-PreReqs.ps1)  
 This PowerShell file requires **Run as Administrator**, if the script is not run as Administrator, it will prompt you accordinfly.  
   
 ![image](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/assets/65971102/6d484f43-f135-467e-9484-28981d4712e9)
@@ -64,5 +73,7 @@ Once you have all required PowerShell modules installed, you may move on to the 
    * Gridview to select a current policy  
     ![image](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/assets/65971102/9f3a7839-95c5-4f7a-98df-fc616f829dcc)
 
+## 3. Enabling Users  
 
+1. 
 
