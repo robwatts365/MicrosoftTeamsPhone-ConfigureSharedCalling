@@ -61,7 +61,7 @@ Once you have all required PowerShell modules installed, you may move on to the 
 > [!NOTE]
 > Dependant on the telephony configuration selection the flow may be different, but the same principles apply for each. 
 > You'll be given the option to use an existing policy or create a new one. 
-> If you select an existing policy, you'll recieve a pop out asking you select the policy
+> If you select an existing policy, you'll receive a pop up asking you select the policy
 > If you select new, you'll be prompted for the information required.
 
 **Here's an example of what you may see:**  
