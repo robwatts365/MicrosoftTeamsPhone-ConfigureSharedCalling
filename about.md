@@ -23,7 +23,7 @@ Instead of assigning a phone number to every user, you use the phone number of a
 
 ![image](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/assets/65971102/964b3c58-12d1-4df7-b613-bfdd65e64e65)
 
-# Page info
+## Page info
 
 | Page | About |
 | :--- | :--- |

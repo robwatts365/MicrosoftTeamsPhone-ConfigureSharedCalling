@@ -77,7 +77,7 @@ Once you have all required PowerShell modules installed, you may move on to the 
 1. 
 
 
-# Page info
+## Page info
 
 | Page | Deployment Guide |
 | :--- | :--- |
