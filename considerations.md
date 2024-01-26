@@ -51,6 +51,8 @@ Before you begin there are a few things to consider:
     | Medium/Low Usage (or require DDI) | Teams Phone + PAYG calling plan | Teams Phone | Yes |
     | Low/No Usage | Teams Phone | Teams Phone | No (Shared) 
 
+# Page info
+
 | Page | Considerations |
 | :--- | :--- |
 | Author | Rob Watts ([@robwatts365](https://github.com/robwatts365)) |
