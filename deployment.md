@@ -3,7 +3,7 @@
 | [Home](README.md) | [About](about.md) | [Considerations](considerations.md) | [Deployment Guide](deployment.md) | [Support](support.md) | 
 | --- | --- | --- | --- | --- |
 
-## Pre-requisites
+## 1. Pre-requisites
 * PowerShell modules:
   * AzureADPreview
   * Microsoft.Graph
@@ -39,7 +39,7 @@ This script will check for pre-requisite PowerShell modules and install these wh
 Once you have all required PowerShell modules installed, you may move on to the next step.
 
 ## 2. Configuration
-1. Run the Configure-SharedCalling PowerShell script - [2-Configure-SharedCalling.ps1](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/blob/main/2-Configure-SharedCalling.ps1)  
+1. Run the Configure-SharedCalling PowerShell script - [2-Configure-SharedCalling.ps1](2-Configure-SharedCalling.ps1)  
 2. The script will start by asking you to select a location to save the log file. Create an appropriate name for your log file and press "Save"
 3. Next the script will check whether the required PowerShell modules exist
 4. Finally you'll be asked for your chosen telephony configuration option. Select the appropriate option by Typing the corresponding number.
@@ -74,7 +74,16 @@ Once you have all required PowerShell modules installed, you may move on to the 
 
 ## 3. Enabling Users  
 
-1. 
+1. Fill the [Users.csv](users.csv) file with the User Principal Names of users to be enabled for Shared Calling in column A.
+  > Preserve the "UPN" title in column A.
+2. Run the Configure-SharedCalling-EnableUsersFromCSV PowerShell script - [3-Configure-SharedCalling-EnableUsersFromCSV.ps1](3-Configure-SharedCalling-EnableUsersFromCSV.ps1)
+3. Select your CSV file. 
+4. Define the policies you'd like to apply.
+5. The script will enable the users for Shared Calling with the defined policies.
+
+> [!NOTE]
+> All users will get the selected policies.
+> This Enable Users script is intended to be used for bulk enablement to the same set of policies.
 
 
 ## Page info
