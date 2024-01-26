@@ -1,10 +1,6 @@
 # Configure Shared Calling for Microsoft Teams Phone
 
-| Name | README.md |
-| :--- | :--- |
-| Author | Rob Watts ([@robwatts365](https://github.com/robwatts365)) |
-| **Version** | 1.1 |
-| **Date** | 26/01/2024 |
+
 
 ## Background
 This project was started to help Microsoft customers deploy Shared Calling for Microsoft Teams Phone. The project consists of interactive powershell scripts that guide IT admins through the process of setting up Shared Calling features for Microsoft Teams Phone. Here you can find the source code, documentation, and instructions on how to use the scripts. It is recommended that you download the latest release of the project directly from this GitHub repository. Find the latest release [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/releases).
@@ -51,9 +47,16 @@ Thank you for using this project and I hope you find it useful and helpful. 😊
 * You have an enabled Operator Connect carrier.
 
 ## Deployment Guide
-Please find step-by-step guidance on the [deployment guide](/docs/instructions/) page.  
+Please find step-by-step guidance on the [deployment guide](/docs/deployment/) page.  
 If you think something is missing, please raise them as issues [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/issues).
 
 ## Disclaimer
 > [!IMPORTANT]
 > _These samples are provided "as is" without warranty of any kind. Microsoft further disclaims all implied warranties including without limitation any implied warranties of merchantability or of fitness for a particular purpose. The entire risk arising out of the use or performance of the samples remains with you. In no event shall Microsoft or its suppliers be liable for any damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use of or inability to use the samples, even if Microsoft has been advised of the possibility of such damages. Because some states do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you._
+
+
+| Name | README.md |
+| :--- | :--- |
+| Author | Rob Watts ([@robwatts365](https://github.com/robwatts365)) |
+| **Version** | 1.1 |
+| **Date** | 26/01/2024 |
