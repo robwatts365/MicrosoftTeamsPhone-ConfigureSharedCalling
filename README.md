@@ -1,5 +1,8 @@
 # Configure Shared Calling for Microsoft Teams Phone
 
+| [Home](README.md) | [About](about.md) | [Considerations](considerations.md) | [Deployment Guide](deployment.md) | [Support](support.md) | 
+| --- | --- | --- | --- | --- |
+
 ## Background
 This project was started to help Microsoft customers deploy Shared Calling for Microsoft Teams Phone. The project consists of interactive powershell scripts that guide IT admins through the process of setting up Shared Calling features for Microsoft Teams Phone. Here you can find the source code, documentation, and instructions on how to use the scripts. It is recommended that you download the latest release of the project directly from this GitHub repository. Find the latest release [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/releases).
 

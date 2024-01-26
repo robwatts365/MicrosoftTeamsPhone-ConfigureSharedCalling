@@ -1,5 +1,8 @@
 # Considerations
 
+| [Home](README.md) | [About](about.md) | [Considerations](considerations.md) | [Deployment Guide](deployment.md) | [Support](support.md) | 
+| --- | --- | --- | --- | --- |
+
 Before you begin there are a few things to consider:
 1. How many shared telephone numbers will be required (i.e. one for the entire organization or by country or by location?).
 2. Consider emergency calling specific to your country and/or location.

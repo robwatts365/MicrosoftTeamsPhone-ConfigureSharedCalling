@@ -1,5 +1,8 @@
 # Deployment Guide
 
+| [Home](README.md) | [About](about.md) | [Considerations](considerations.md) | [Deployment Guide](deployment.md) | [Support](support.md) | 
+| --- | --- | --- | --- | --- |
+
 ## Pre-requisites
 * PowerShell modules:
   * AzureADPreview
