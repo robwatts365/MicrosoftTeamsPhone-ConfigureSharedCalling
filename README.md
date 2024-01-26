@@ -14,7 +14,7 @@ The project aims to make it easier and faster for IT admins to configure and dep
 The project is open source and welcomes contributions from the community. 
 
 ## Documentation
-For all documentation about this project, please see the Docs pages within this repository, found [here](/docs/).
+For all documentation about this project, please see the docs pages within this repository, found [here](/docs/).
 
 For further guidance about Shared Calling in Teams, please see this [configuration guide](https://aka.ms/TeamsSharedCallingConfigGuide) by [@ariprotheroe](https://github.com/ariprotheroe) and the [Microsot Learn page](https://learn.microsoft.com/en-us/microsoftteams/shared-calling-setup).
 
