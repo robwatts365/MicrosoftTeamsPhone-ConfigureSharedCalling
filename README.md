@@ -46,7 +46,7 @@ Thank you for using this project and I hope you find it useful and helpful. 😊
 * You have an enabled Operator Connect carrier.
 
 ## Deployment Guide
-Please find step-by-step guidance on the [deployment guide](/docs/deployment/) page.  
+Please find step-by-step guidance on the [deployment guide](deployment.md) page.  
 If you think something is missing, please raise them as issues [here](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/issues).
 
 ## Disclaimer
