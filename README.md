@@ -36,10 +36,19 @@ Thank you for using this project and I hope you find it useful and helpful. 😊
  > [!NOTE]
   >  These will be installed  for you by the [pre-requisites script](1-ConfigureSharedCalling-PreReqs.ps1)
 
-*	Microsoft Teams Phone Resource Account
-*	Shared telephone phone number for inbound and outbound calling
+*	Microsoft Teams Phone Resource Account licensing
+*	Shared telephone phone number for inbound and outbound calling (Must be enabled for Voice app usage)
 *	Microsoft Phone System licensing for users (E5 or other licences with Phone System Standard)
 *	Optional - telephone number(s) for emergency callback
+
+### For Direct Routing deployments:
+* Your SBC is deployed and working correctly.
+* Teams voice routing configuration has been completed.
+### For Calling Plans deployments:
+* Pay-as-you go (PAYG) calling plan is purchased and ready to be assigned.
+* Communication credits licence is purchased and has funds.
+### For Operator Connect deployments:
+* You have an enabled Operator Connect carrier.
 
 ## Instructions
 Please find step-by-step guidance on the [instructions](/docs/instructions/) page.  
