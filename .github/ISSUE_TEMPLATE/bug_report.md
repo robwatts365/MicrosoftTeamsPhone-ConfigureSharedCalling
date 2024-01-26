@@ -38,4 +38,5 @@ Direct Routing / Calling Plans / Operator Connect
 **Additional context**
 Add any other context about the problem here.
 
-**Please attatch a copy of your logfile**
+**Please attach a copy of your logfile**
+📎
