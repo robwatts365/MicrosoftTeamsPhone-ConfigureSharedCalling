@@ -54,7 +54,7 @@ Once you have all required PowerShell modules installed, you may move on to the 
 8. You'll then be asked for the telephone number you wish to use.
    ![image](https://github.com/robwatts365/MicrosoftTeamsPhone-ConfigureSharedCalling/assets/65971102/79366712-9af6-4b9a-8f37-8916824dc675)
 > [!IMPORTANT]
-  >  This needs to be in E.164 format. Please check your telepghone number before pressing Ok to continue.
+  >  This needs to be in E.164 format. Please check your telephone number before pressing Ok to continue.
 9. The Auto Attendant Resource Account will now be created and appropriately licensed.
 > This process does take about 4 mins, as the script will sleep for 2 minutes between tasks, to allow for changes to be synced.
 
